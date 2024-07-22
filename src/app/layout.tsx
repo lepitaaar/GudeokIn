@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Viewport } from "next";
 import AddToHomeDialong from "./component/mobile/A2HSDialog";
+import { LoadingProvider } from "./LoadingProvider";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -30,6 +31,14 @@ export const metadata: Metadata = {
         url: "https://gudeok.kr",
         title: "구덕인",
         description: "부산 구덕고등학교 학생 서비스 플랫폼.",
+        images: [
+            {
+                url: "/opengraph-image.png", // 이미지의 상대 경로
+                width: 1200,
+                height: 630,
+                alt: "구덕인 이미지",
+            },
+        ],
     },
     icons: {
         other: [
@@ -171,8 +180,10 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={`${pretendard.variable} font-pretendard`}>
-                {children}
-                <AddToHomeDialong />
+                <LoadingProvider>
+                    {children}
+                    <AddToHomeDialong />
+                </LoadingProvider>
             </body>
         </html>
     );

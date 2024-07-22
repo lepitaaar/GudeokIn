@@ -44,7 +44,7 @@ interface TimetableRow {
 interface TimetableData {
     hisTimetable: [
         { head: [TimetableHead, { RESULT: TimetableResult }] },
-        { row: TimetableRow[] }
+        { row: TimetableRow[] },
     ];
 }
 
@@ -81,7 +81,7 @@ export default async function WeekSchedule() {
         const parsed: TimetableRow[] = [];
         const dupCheck: Set<number> = new Set();
 
-        data.hisTimetable[1].row.forEach((row) => {
+        data.hisTimetable?.[1]?.row.forEach((row) => {
             if (row.CLASS_NM == classNM) {
                 parsed.push(row);
                 dupCheck.add(row.PERIO);

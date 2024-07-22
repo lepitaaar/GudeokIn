@@ -74,18 +74,18 @@ const uploadFile = async (
     body: Buffer
 ): Promise<{ key: string; loc: string }> => {
     try {
-        const hash = getHash(body);
-        const hashMap = await buildHashMap(bucketName);
+        // const hash = getHash(body);
+        // const hashMap = await buildHashMap(bucketName);
 
-        if (hashMap.has(hash)) {
-            const existingKey = hashMap.get(hash);
-            const duplicateUrl = `https://cdn.gudeok.kr/${existingKey}`;
-            console.log(`Duplicate file found. URL: ${duplicateUrl}`);
-            return {
-                key: existingKey!,
-                loc: duplicateUrl,
-            };
-        }
+        // if (hashMap.has(hash)) {
+        //     const existingKey = hashMap.get(hash);
+        //     const duplicateUrl = `https://cdn.gudeok.kr/${existingKey}`;
+        //     console.log(`Duplicate file found. URL: ${duplicateUrl}`);
+        //     return {
+        //         key: existingKey!,
+        //         loc: duplicateUrl,
+        //     };
+        // }
 
         const upload = new Upload({
             client: S3,

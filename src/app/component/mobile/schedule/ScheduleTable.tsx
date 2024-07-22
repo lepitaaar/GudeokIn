@@ -109,7 +109,6 @@ const ScheduleTable = ({
             ) : (
                 <SetSubectMappingView setSubject={setSubject} existMap={map} />
             )}
-            {/* <button>시간표 저장</button> */}
         </div>
     );
 };

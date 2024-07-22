@@ -6,7 +6,6 @@ import moment from "moment";
 import "moment/locale/ko";
 import { getUserByUUID } from "./lib/user";
 import MobilePage from "./MobilePage";
-import { LoadingSpinner } from "./component/common/LoadingSpinner";
 
 export default async function Home() {
     // after check Is mobile or desktop

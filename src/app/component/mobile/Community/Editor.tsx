@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import ReactQuill, { Quill } from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import "./editor.css";
 import axios from "@/app/lib/axios";
+import { isAxiosError } from "axios";
 
 const formats = [
     "font",
@@ -40,11 +41,60 @@ const fontSizeArr = [
     "98px",
 ];
 
+const colorOptions = [
+    "#000000",
+    "#e60000",
+    "#ff9900",
+    "#ffff00",
+    "#008a00",
+    "#0066cc",
+    "#9933ff",
+    "#ffffff",
+    "#facccc",
+    "#ffebcc",
+    "#ffffcc",
+    "#cce8cc",
+    "#cce0f5",
+    "#ebd6ff",
+    "#bbbbbb",
+    "#f06666",
+    "#ffc266",
+    "#ffff66",
+    "#66b966",
+    "#66a3e0",
+    "#c285ff",
+    "#888888",
+    "#a10000",
+    "#b26b00",
+    "#b2b200",
+    "#006100",
+    "#0047b2",
+    "#6b24b2",
+    "#444444",
+    "#5c0000",
+    "#663d00",
+    "#666600",
+    "#003700",
+    "#002966",
+    "#3d1466",
+];
+
 interface Props {
     editorRef: React.RefObject<ReactQuill>;
     initialValue?: string; // 글수정 시 필요
     setValues: (e: string) => void;
 }
+
+const ImageProgressBar = ({ progress }: { progress: number }) => {
+    return (
+        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+            <div
+                className="bg-blue-600 h-2.5 rounded-full"
+                style={{ width: `${progress}%` }}
+            ></div>
+        </div>
+    );
+};
 
 export default function MyEditor({
     editorRef,
@@ -54,6 +104,7 @@ export default function MyEditor({
     var Size: any = Quill.import("attributors/style/size");
     Size.whitelist = fontSizeArr;
     Quill.register(Size, true);
+    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
     useEffect(() => {
         const toolbar: any = editorRef.current
@@ -112,6 +163,7 @@ export default function MyEditor({
                     [{ align: ["justify", "center", "right"] }],
                     ["bold", "italic", "underline", "strike"],
                     ["link", "image", "video"],
+                    [{ color: colorOptions }, { background: colorOptions }],
                     [
                         { list: "ordered" },
                         { list: "bullet" },
@@ -144,6 +196,13 @@ export default function MyEditor({
 
     return (
         <>
+            {/**
+                 * {uploadProgress !== null && (
+                <div className="mb-4">
+                    <ImageProgressBar progress={uploadProgress} />
+                </div>
+            )}
+                 */}
             {editorRef && (
                 <ReactQuill
                     className="w-full h-[calc(100vh-380px)] mt-2"
