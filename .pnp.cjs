@@ -80,6 +80,7 @@ const RAW_RUNTIME_STATE =
           ["next-pwa", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.6.0"],\
           ["node-gyp", "npm:10.2.0"],\
           ["nodemailer", "npm:6.9.14"],\
+          ["nookies", "npm:2.5.2"],\
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.3.1"],\
@@ -9491,6 +9492,13 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["cookie", [\
+      ["npm:0.4.2", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/cookie-npm-0.4.2-7761894d5f-10c0.zip/node_modules/cookie/",\
+        "packageDependencies": [\
+          ["cookie", "npm:0.4.2"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
       ["npm:0.6.0", {\
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/cookie-npm-0.6.0-362d6a2e45-10c0.zip/node_modules/cookie/",\
         "packageDependencies": [\
@@ -11695,6 +11703,7 @@ const RAW_RUNTIME_STATE =
           ["next-pwa", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.6.0"],\
           ["node-gyp", "npm:10.2.0"],\
           ["nodemailer", "npm:6.9.14"],\
+          ["nookies", "npm:2.5.2"],\
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.3.3"],\
           ["react", "npm:18.3.1"],\
@@ -13711,6 +13720,17 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["nookies", [\
+      ["npm:2.5.2", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/nookies-npm-2.5.2-691fdd44ab-10c0.zip/node_modules/nookies/",\
+        "packageDependencies": [\
+          ["nookies", "npm:2.5.2"],\
+          ["cookie", "npm:0.4.2"],\
+          ["set-cookie-parser", "npm:2.6.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["nopt", [\
       ["npm:7.2.1", {\
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/nopt-npm-7.2.1-635b7da949-10c0.zip/node_modules/nopt/",\
@@ -15374,6 +15394,15 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["serialize-javascript", "npm:6.0.2"],\
           ["randombytes", "npm:2.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["set-cookie-parser", [\
+      ["npm:2.6.0", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/set-cookie-parser-npm-2.6.0-a7dd154236-10c0.zip/node_modules/set-cookie-parser/",\
+        "packageDependencies": [\
+          ["set-cookie-parser", "npm:2.6.0"]\
         ],\
         "linkType": "HARD"\
       }]\

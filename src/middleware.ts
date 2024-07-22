@@ -5,9 +5,21 @@ import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const secret = process.env.RSA_PRIVATE_KEY!;
 
-async function verifyToken(token: RequestCookie) {
+export async function verifyToken(token: RequestCookie) {
     try {
         await jwtVerify(token.value, new TextEncoder().encode(secret));
+        return { ok: true, error: false };
+    } catch (error) {
+        if (error instanceof errors.JWTExpired) {
+            return { ok: false, error: false };
+        }
+        return { ok: false, error: true };
+    }
+}
+
+export async function verifyTokenWithString(token: string) {
+    try {
+        await jwtVerify(token, new TextEncoder().encode(secret));
         return { ok: true, error: false };
     } catch (error) {
         if (error instanceof errors.JWTExpired) {

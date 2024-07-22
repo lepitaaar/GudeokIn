@@ -1,10 +1,16 @@
-import type { Metadata } from "next";
+import type {
+    GetServerSideProps,
+    GetServerSidePropsContext,
+    Metadata,
+} from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import type { Viewport } from "next";
 import AddToHomeDialong from "./component/mobile/A2HSDialog";
 import { LoadingProvider } from "./LoadingProvider";
 import { Suspense } from "react";
+import nookies from "nookies";
+import { verifyToken, verifyTokenWithString } from "@/middleware";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -191,4 +197,28 @@ export default function RootLayout({
             </body>
         </html>
     );
+}
+
+export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+    const cookies = nookies.get(ctx);
+    const { accessToken, refreshToken } = cookies;
+
+    if (!accessToken || !refreshToken) {
+        // If either token is missing, delete the cookies
+        nookies.destroy(ctx, "accessToken");
+        nookies.destroy(ctx, "refreshToken");
+        return { props: {} };
+    }
+
+    const isAccessTokenValid = await verifyTokenWithString(accessToken);
+    const isRefreshTokenValid = await verifyTokenWithString(refreshToken);
+
+    if (!isAccessTokenValid.ok || !isRefreshTokenValid.ok) {
+        nookies.destroy(ctx, "accessToken");
+        nookies.destroy(ctx, "refreshToken");
+    }
+
+    return {
+        props: {}, // Pass any additional props here if needed
+    };
 }
