@@ -21,6 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://gudeok.kr"),
     title: {
         template: "%s | 구덕인",
         default: "구덕인",
