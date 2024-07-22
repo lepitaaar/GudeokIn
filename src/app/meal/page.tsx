@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import NavBarLayout from "../component/mobile/Header/NavBarLayout";
 import MobileMealCarousel from "../component/mobile/Meal/MealCarousel";
 import { getWeekdaysDates } from "../lib/util";
@@ -97,10 +98,12 @@ export default async function MealPage() {
 
     return (
         <>
-            <NavBarLayout>
-                {/* data={parsedData.mealServiceDietInfo[1].row */}
-                <MobileMealCarousel items={mealArray} />
-            </NavBarLayout>
+            <Suspense>
+                <NavBarLayout>
+                    {/* data={parsedData.mealServiceDietInfo[1].row */}
+                    <MobileMealCarousel items={mealArray} />
+                </NavBarLayout>
+            </Suspense>
         </>
     );
 }

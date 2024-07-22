@@ -4,6 +4,7 @@ import "./globals.css";
 import type { Viewport } from "next";
 import AddToHomeDialong from "./component/mobile/A2HSDialog";
 import { LoadingProvider } from "./LoadingProvider";
+import { Suspense } from "react";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -180,10 +181,12 @@ export default function RootLayout({
     return (
         <html lang="ko">
             <body className={`${pretendard.variable} font-pretendard`}>
-                <LoadingProvider>
-                    {children}
-                    <AddToHomeDialong />
-                </LoadingProvider>
+                <Suspense>
+                    <LoadingProvider>
+                        {children}
+                        <AddToHomeDialong />
+                    </LoadingProvider>
+                </Suspense>
             </body>
         </html>
     );

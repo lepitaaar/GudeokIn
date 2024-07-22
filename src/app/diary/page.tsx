@@ -3,6 +3,7 @@ import NavBarLayout from "../component/mobile/Header/NavBarLayout";
 import moment from "moment";
 import CalendarWrapper from "./CalendarWrapper";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
     title: "학사 일정",
@@ -35,8 +36,10 @@ export default async function Diary() {
         }
     }
     return (
-        <NavBarLayout>
-            <CalendarWrapper schedule={schedule} />
-        </NavBarLayout>
+        <Suspense>
+            <NavBarLayout>
+                <CalendarWrapper schedule={schedule} />
+            </NavBarLayout>
+        </Suspense>
     );
 }
