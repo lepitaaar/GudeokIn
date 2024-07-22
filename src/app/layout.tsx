@@ -199,26 +199,26 @@ export default function RootLayout({
     );
 }
 
-export async function getServerSideProps(ctx: GetServerSidePropsContext) {
-    const cookies = nookies.get(ctx);
-    const { accessToken, refreshToken } = cookies;
+// export async function getServerSideProps(ctx: GetServerSidePropsContext) {
+//     const cookies = nookies.get(ctx);
+//     const { accessToken, refreshToken } = cookies;
 
-    if (!accessToken || !refreshToken) {
-        // If either token is missing, delete the cookies
-        nookies.destroy(ctx, "accessToken");
-        nookies.destroy(ctx, "refreshToken");
-        return { props: {} };
-    }
+//     if (!accessToken || !refreshToken) {
+//         // If either token is missing, delete the cookies
+//         nookies.destroy(ctx, "accessToken");
+//         nookies.destroy(ctx, "refreshToken");
+//         return { props: {} };
+//     }
 
-    const isAccessTokenValid = await verifyTokenWithString(accessToken);
-    const isRefreshTokenValid = await verifyTokenWithString(refreshToken);
+//     const isAccessTokenValid = await verifyTokenWithString(accessToken);
+//     const isRefreshTokenValid = await verifyTokenWithString(refreshToken);
 
-    if (!isAccessTokenValid.ok || !isRefreshTokenValid.ok) {
-        nookies.destroy(ctx, "accessToken");
-        nookies.destroy(ctx, "refreshToken");
-    }
+//     if (!isAccessTokenValid.ok || !isRefreshTokenValid.ok) {
+//         nookies.destroy(ctx, "accessToken");
+//         nookies.destroy(ctx, "refreshToken");
+//     }
 
-    return {
-        props: {}, // Pass any additional props here if needed
-    };
-}
+//     return {
+//         props: {}, // Pass any additional props here if needed
+//     };
+// }

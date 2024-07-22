@@ -5,6 +5,7 @@ import Link from "next/link";
 import LoginModal from "./Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
+import axios from "@/app/lib/axios";
 
 interface Credentials {
     username: string;
@@ -33,10 +34,19 @@ export default function MobileMainNavBar({
     const router = useRouter();
 
     useEffect(() => {
-        const token = getCookie("accessToken");
-        if (token !== undefined && String(token).length > 0) {
-            setLogin(true);
-        }
+        // const token = getCookie("accessToken");
+        // if (token !== undefined && String(token).length > 0) {
+        //     setLogin(true);
+        // }
+        const checkMe = async () => {
+            try {
+                await axios.get(`/api/auth/me`);
+                setLogin(true);
+            } catch (error) {
+                setLogin(false);
+            }
+        };
+        checkMe();
     }, []);
 
     const handleLogin = async (credentials: Credentials) => {
