@@ -1,0 +1,41 @@
+/* components/ScheduleTable.module.css */
+.scheduleTable {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.scheduleTable td {
+    height: 62px;
+}
+
+.scheduleTable th,
+.scheduleTable td {
+    padding: 8px;
+    text-align: center;
+    color: #333;
+    word-break: normal;
+}
+
+.scheduleTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.cell {
+    white-space: normal;
+    word-break: keep-all;
+}
+
+@media (max-width: 480px) {
+    .scheduleTable,
+    .scheduleTable th,
+    .scheduleTable td {
+        font-size: 12px;
+    }
+
+    .scheduleTable th,
+    .scheduleTable td {
+        padding: 4px;
+    }
+}

@@ -1,0 +1,50 @@
+.container {
+    overflow-x: auto;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.headerCell {
+    width: 16%;
+    padding: 12px;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.7em;
+    border: 1px solid #a5a5a5;
+}
+
+.periodCell {
+    padding: 12px;
+    background-color: #ffffff;
+    color: #000000;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.7em;
+    border: 1px solid #a5a5a5;
+}
+
+.tableCell {
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    background-color: #ffffff;
+    text-align: center;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tableCell:hover {
+    background-color: #ecf0f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tableCell.selected {
+    background-color: #969696;
+    color: #ffffff;
+}
