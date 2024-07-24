@@ -85,8 +85,8 @@ export default async function middleware(req: NextRequest) {
     /** 권한없으면 메인으로 리다이렉트 */
     if (
         token === undefined &&
-        ["/write", "/stcard", "/schedule", "/add_diary"].some((path) =>
-            pathname.startsWith(path)
+        ["/write", "/stcard", "/schedule", "/add_diary", "/modify"].some(
+            (path) => pathname.startsWith(path)
         )
     ) {
         const redirect = NextResponse.redirect(
@@ -176,6 +176,34 @@ export default async function middleware(req: NextRequest) {
             );
         }
     }
+
+    // if (pathname.startsWith("/modify")) {
+    //     /** 토큰검증은 위에서 끝내서 검증필요없음 */
+    //     try {
+    //         /** /edit/post_id */
+    //         const post_id = parseInt(pathname.replace("/modify/", ""));
+    //         const payload = await jwtVerify<JWTpayload>(
+    //             token!.value,
+    //             secretKey
+    //         );
+    //         const result = await db.query(
+    //             `SELECT uuid from everytime.user_info`
+    //         );
+
+    //         // if (result.recordset.length > 0) {
+    //         //     return NextResponse.next();
+    //         // }
+
+    //         return NextResponse.redirect(
+    //             new URL("/?alert=비정상적인 접근", req.url)
+    //         );
+    //     } catch (error) {
+    //         return NextResponse.redirect(
+    //             new URL("/?alert=존재 하지않은 게시물입니다", req.url)
+    //         );
+    //     }
+    // }
+
     return NextResponse.next();
 }
 

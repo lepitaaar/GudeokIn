@@ -41,7 +41,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 300
             )}.webp`; //${mimeType.split("/")[1]}
 
-            // Process the image using sharp to strip metadata
             var processedBuffer: Buffer | null = null;
             if (mimeType == "image/gif") {
                 processedBuffer = await sharp(buffer, { animated: true })
@@ -54,16 +53,18 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                     .toBuffer();
             }
 
+            const metadata = await sharp(processedBuffer).metadata();
+            const { width, height } = metadata;
+
             const { key, loc } = await uploadFile(
                 uniqueFilename,
                 processedBuffer
             );
-
-            //fs.writeFileSync(filePath, processedBuffer);
-            ///uploads/${date}/${uniqueFilename}
             complete_files.push({
                 name: key,
                 url: loc,
+                width: width,
+                height: height,
             });
         }
 

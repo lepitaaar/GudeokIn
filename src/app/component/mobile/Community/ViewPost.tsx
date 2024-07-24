@@ -141,19 +141,7 @@ export default function MobileViewPost({
                     <li className="flex-1 text-center">
                         <p className="font-semibold text-lg">{post.board}</p>
                     </li>
-                    <li className="flex-1 mr-3 flex justify-end relative">
-                        {/* 권한 체크 */}
-                        {/**<svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            height={24}
-                            width={24}
-                            className="cursor-pointer"
-                            viewBox="0 -960 960 960"
-                            fill="#2b2b2b"
-                        >
-                            <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
-                        </svg> */}
-                    </li>
+                    <li className="flex-1 mr-3 flex justify-end relative"></li>
                 </ul>
             </nav>
             <div className="px-4 mt-2 divide-y-[1px] divide-solid space-y-2">
@@ -227,8 +215,17 @@ export default function MobileViewPost({
                                 </p>
                             </button>
                         </div>
+                        {/** 추후 수정 관리자 한테도 수정 표시가 되지만 수정권한은 없으므로 보이지 않게 처리해야함 admin, author변수 분리해서 처리하는게 좋을듯 */}
                         {author && (
-                            <div className="manage text-xs w-fit">
+                            <div className="manage text-xs w-fit flex flex-row space-x-2">
+                                <p
+                                    className="cursor-pointer"
+                                    onClick={() => {
+                                        router.push(`/modify/${post.post_id}`);
+                                    }}
+                                >
+                                    수정
+                                </p>
                                 <p
                                     className="cursor-pointer"
                                     onClick={deletePost}

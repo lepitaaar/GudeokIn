@@ -85,17 +85,6 @@ interface Props {
     setValues: (e: string) => void;
 }
 
-const ImageProgressBar = ({ progress }: { progress: number }) => {
-    return (
-        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-            <div
-                className="bg-blue-600 h-2.5 rounded-full"
-                style={{ width: `${progress}%` }}
-            ></div>
-        </div>
-    );
-};
-
 export default function MyEditor({
     editorRef,
     initialValue,
@@ -104,7 +93,6 @@ export default function MyEditor({
     var Size: any = Quill.import("attributors/style/size");
     Size.whitelist = fontSizeArr;
     Quill.register(Size, true);
-    const [uploadProgress, setUploadProgress] = useState<number | null>(null);
 
     useEffect(() => {
         const toolbar: any = editorRef.current
@@ -143,9 +131,12 @@ export default function MyEditor({
                     }
                 );
 
-                const files: { url: string }[] = data.files;
+                const files: { url: string; width: number; height: number }[] =
+                    data.files;
 
-                files.forEach(({ url }, index) => {
+                files.forEach(({ url, width, height }, index) => {
+                    console.log(width);
+                    console.log(height);
                     editor.insertEmbed(range.index + index, "image", url);
                 });
                 editor.setSelection(range.index + files.length + 1);
@@ -196,19 +187,13 @@ export default function MyEditor({
 
     return (
         <>
-            {/**
-                 * {uploadProgress !== null && (
-                <div className="mb-4">
-                    <ImageProgressBar progress={uploadProgress} />
-                </div>
-            )}
-                 */}
             {editorRef && (
                 <ReactQuill
                     className="w-full h-[calc(100vh-380px)] mt-2"
                     ref={editorRef}
                     theme="snow"
                     modules={modules}
+                    value={initialValue}
                     formats={formats}
                     onChange={(e) => setValues(e)}
                 />
