@@ -87,10 +87,12 @@ export default function MyEditor({
     editorRef,
     initialValue,
     setContent,
+    setLoading,
 }: {
     editorRef: React.RefObject<any>;
     initialValue: string;
     setContent: (e: string) => void;
+    setLoading: (e: boolean) => void;
 }) {
     const [content, setLocalContent] = useState(initialValue);
     var Size: any = Quill.import("attributors/style/size");
@@ -123,6 +125,7 @@ export default function MyEditor({
         type: string,
         imageData: ImageData
     ) {
+        setLoading(true);
         const editor = editorRef.current?.getEditor()!;
         const range = editor?.getSelection(true);
         try {
@@ -157,6 +160,7 @@ export default function MyEditor({
             }
             console.log(error);
         }
+        setLoading(false);
     }
 
     const imageHandler = async () => {
@@ -166,6 +170,7 @@ export default function MyEditor({
         input.setAttribute("accept", "image/*");
         input.click();
         input.addEventListener("change", async () => {
+            setLoading(true);
             if (input.files === undefined || input.files?.length == 0) return;
             const editor = editorRef.current?.getEditor()!;
 
@@ -205,6 +210,7 @@ export default function MyEditor({
                 }
                 console.log(error);
             }
+            setLoading(false);
         });
     };
 

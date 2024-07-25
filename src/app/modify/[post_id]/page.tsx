@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { getPostData, modifyPost } from "./action";
 import dynamic from "next/dynamic";
 import { Post } from "@/app/export/DTO";
+import { LoadingSpinner } from "@/app/component/common/LoadingSpinner";
 const PostEditor = dynamic(
     () => import("@/app/component/mobile/Community/Editor"),
     { ssr: false }
@@ -19,6 +20,7 @@ export default function EditForm({ params }: { params: { post_id: number } }) {
     const editorRef = useRef<any>(null);
     const isLoadingRef = useRef(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [imageLoading, setImageLoading] = useState(false);
 
     useEffect(() => {
         async function getPost() {
@@ -43,6 +45,7 @@ export default function EditForm({ params }: { params: { post_id: number } }) {
 
     return (
         <>
+            {imageLoading && <LoadingSpinner />}
             <form
                 onSubmit={async (e) => {
                     e.preventDefault();
@@ -107,6 +110,7 @@ export default function EditForm({ params }: { params: { post_id: number } }) {
                             editorRef={editorRef}
                             initialValue={content}
                             setContent={setContent}
+                            setLoading={setImageLoading}
                         />
                     </main>
                 )}

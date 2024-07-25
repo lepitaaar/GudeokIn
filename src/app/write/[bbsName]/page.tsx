@@ -6,6 +6,7 @@ import { AxiosResponse, isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import dynamic from "next/dynamic";
+import { LoadingSpinner } from "@/app/component/common/LoadingSpinner";
 
 const PostEditor = dynamic(
     () => import("@/app/component/mobile/Community/Editor"),
@@ -32,6 +33,7 @@ export default function WriteForm({ params }: { params: { bbsName: string } }) {
     const router = useRouter();
     const editorRef = useRef<any>(null);
     const isLoadingRef = useRef(false);
+    const [imageLoading, setImageLoading] = useState(false);
     //중복방지
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -76,6 +78,7 @@ export default function WriteForm({ params }: { params: { bbsName: string } }) {
 
     return (
         <>
+            {imageLoading && <LoadingSpinner />}
             <form
                 onSubmit={(e) => {
                     if (isLoadingRef.current) {
@@ -129,6 +132,7 @@ export default function WriteForm({ params }: { params: { bbsName: string } }) {
                         editorRef={editorRef}
                         initialValue={content}
                         setContent={setContent}
+                        setLoading={setImageLoading}
                     />
                 </main>
             </form>
