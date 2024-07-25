@@ -83,6 +83,7 @@ const RAW_RUNTIME_STATE =
           ["nookies", "npm:2.5.2"],\
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.3.3"],\
+          ["quill-image-drop-and-paste", "npm:1.3.0"],\
           ["react", "npm:18.3.1"],\
           ["react-barcode", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.5.3"],\
           ["react-calendar", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.0"],\
@@ -11706,6 +11707,7 @@ const RAW_RUNTIME_STATE =
           ["nookies", "npm:2.5.2"],\
           ["postcss", "npm:8.4.38"],\
           ["prettier", "npm:3.3.3"],\
+          ["quill-image-drop-and-paste", "npm:1.3.0"],\
           ["react", "npm:18.3.1"],\
           ["react-barcode", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.5.3"],\
           ["react-calendar", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.0"],\
@@ -14555,6 +14557,15 @@ const RAW_RUNTIME_STATE =
           ["fast-diff", "npm:1.3.0"],\
           ["lodash.clonedeep", "npm:4.5.0"],\
           ["lodash.isequal", "npm:4.5.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["quill-image-drop-and-paste", [\
+      ["npm:1.3.0", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/quill-image-drop-and-paste-npm-1.3.0-0383f91718-10c0.zip/node_modules/quill-image-drop-and-paste/",\
+        "packageDependencies": [\
+          ["quill-image-drop-and-paste", "npm:1.3.0"]\
         ],\
         "linkType": "HARD"\
       }]\

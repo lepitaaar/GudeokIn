@@ -5,12 +5,13 @@ import { db } from "@/app/lib/database";
 import { getUserByUUID } from "@/app/lib/user";
 
 export async function GET(req: NextRequest) {
+    const header = req.headers;
     try {
         var admin = false;
         var user: User | undefined = undefined;
 
-        if (req.headers.get("Authorization") != undefined) {
-            const token = req.headers.get("Authorization")!.split(" ")[1] ?? "";
+        if (header.get("Authorization") != undefined) {
+            const token = header.get("Authorization")!.split(" ")[1] ?? "";
             const verified = verify(token);
             if (verified.ok) {
                 user = await getUserByUUID(verified.payload!.uuid);

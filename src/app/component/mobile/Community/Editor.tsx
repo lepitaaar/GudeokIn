@@ -5,7 +5,10 @@ import "react-quill-new/dist/quill.snow.css";
 import "./editor.css";
 import axios from "@/app/lib/axios";
 import { isAxiosError } from "axios";
+import QuillImageDropAndPaste, { ImageData } from "quill-image-drop-and-paste";
+import CustomImageBlot from "./CustomImageBlot";
 
+class NoopClass {}
 const formats = [
     "font",
     "header",
@@ -22,6 +25,7 @@ const formats = [
     "color",
     "background",
     "size",
+    "customImage",
 ];
 
 const fontSizeArr = [
@@ -84,7 +88,7 @@ export default function MyEditor({
     initialValue,
     setContent,
 }: {
-    editorRef: React.RefObject<ReactQuill>;
+    editorRef: React.RefObject<any>;
     initialValue: string;
     setContent: (e: string) => void;
 }) {
@@ -92,7 +96,14 @@ export default function MyEditor({
     var Size: any = Quill.import("attributors/style/size");
     Size.whitelist = fontSizeArr;
     Quill.register(Size, true);
-
+    Quill.register(
+        {
+            "modules/uploader": NoopClass,
+        },
+        false
+    );
+    Quill.register("customImage", CustomImageBlot);
+    Quill.register("modules/imageDropAndPaste", QuillImageDropAndPaste);
     useEffect(() => {
         const toolbar: any = editorRef.current
             ?.getEditor()
@@ -106,6 +117,47 @@ export default function MyEditor({
     useEffect(() => {
         setContent(content);
     }, [content, setContent]);
+
+    async function imagePasteHandler(
+        imageDataUrl: string,
+        type: string,
+        imageData: ImageData
+    ) {
+        const editor = editorRef.current?.getEditor()!;
+        const range = editor?.getSelection(true);
+        try {
+            const { data } = await axios.post(
+                `/api/upload`,
+                {
+                    file: imageData.toBlob(),
+                },
+                {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            const files: { url: string; width: number; height: number }[] =
+                data.files;
+
+            files.forEach(({ url, width, height }, index) => {
+                editor.insertEmbed(range.index + index, "customImage", {
+                    url: url,
+                    width: width,
+                    height: height,
+                    loading: "lazy",
+                    decoding: "async",
+                });
+            });
+            editor.setSelection(range.index + files.length + 1);
+        } catch (error) {
+            if (isAxiosError(error) && error.response) {
+                alert(error.response.data.message);
+            }
+            console.log(error);
+        }
+    }
 
     const imageHandler = async () => {
         const input = document.createElement("input");
@@ -138,12 +190,19 @@ export default function MyEditor({
                     data.files;
 
                 files.forEach(({ url, width, height }, index) => {
-                    console.log(width);
-                    console.log(height);
-                    editor.insertEmbed(range.index + index, "image", url);
+                    editor.insertEmbed(range.index + index, "customImage", {
+                        url: url,
+                        width: width,
+                        height: height,
+                        loading: "lazy",
+                        decoding: "async",
+                    });
                 });
                 editor.setSelection(range.index + files.length + 1);
             } catch (error) {
+                if (isAxiosError(error) && error.response) {
+                    alert(error.response.data.message);
+                }
                 console.log(error);
             }
         });
@@ -185,6 +244,9 @@ export default function MyEditor({
                     image: imageHandler,
                 },
             },
+            imageDropAndPaste: {
+                handler: imagePasteHandler,
+            },
         };
     }, [editorRef]);
 
@@ -198,7 +260,10 @@ export default function MyEditor({
                     modules={modules}
                     formats={formats}
                     value={content}
-                    onChange={(e) => setLocalContent(e)}
+                    onChange={(e) => {
+                        setLocalContent(e);
+                        console.log(e);
+                    }}
                 />
             )}
         </>
