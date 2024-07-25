@@ -127,7 +127,8 @@ export default function WriteForm({ params }: { params: { bbsName: string } }) {
 
                     <PostEditor
                         editorRef={editorRef}
-                        setValues={(e) => setContent(e)}
+                        initialValue={content}
+                        setContent={setContent}
                     />
                 </main>
             </form>

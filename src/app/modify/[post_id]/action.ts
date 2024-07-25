@@ -78,6 +78,7 @@ export async function modifyPost(
                 uuid: valid_token.payload!.uuid,
             }
         );
+        revalidatePath(`/board/[slug]`, "page");
     } catch (error) {
         console.log(error);
         return { message: "데이터베이스 오류" };

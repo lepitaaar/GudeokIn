@@ -79,17 +79,16 @@ const colorOptions = [
     "#3d1466",
 ];
 
-interface Props {
-    editorRef: React.RefObject<ReactQuill>;
-    initialValue?: string; // 글수정 시 필요
-    setValues: (e: string) => void;
-}
-
 export default function MyEditor({
     editorRef,
     initialValue,
-    setValues,
-}: Props) {
+    setContent,
+}: {
+    editorRef: React.RefObject<ReactQuill>;
+    initialValue: string;
+    setContent: (e: string) => void;
+}) {
+    const [content, setLocalContent] = useState(initialValue);
     var Size: any = Quill.import("attributors/style/size");
     Size.whitelist = fontSizeArr;
     Quill.register(Size, true);
@@ -103,6 +102,10 @@ export default function MyEditor({
         );
         sizeButton.innerHTML = `<svg class="fr-svg" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.75,19h1.5l-3-10h-1.5l-3,10h1.5L17,16.5h3Zm-3.3-4,1.05-3.5L19.55,15Zm-5.7,4h2l-5-14h-2l-5,14h2l1.43-4h5.14ZM5.89,13,7.75,7.8,9.61,13Z"></path></svg>`;
     }, [editorRef]);
+
+    useEffect(() => {
+        setContent(content);
+    }, [content, setContent]);
 
     const imageHandler = async () => {
         const input = document.createElement("input");
@@ -183,7 +186,7 @@ export default function MyEditor({
                 },
             },
         };
-    }, []);
+    }, [editorRef]);
 
     return (
         <>
@@ -193,9 +196,9 @@ export default function MyEditor({
                     ref={editorRef}
                     theme="snow"
                     modules={modules}
-                    value={initialValue}
                     formats={formats}
-                    onChange={(e) => setValues(e)}
+                    value={content}
+                    onChange={(e) => setLocalContent(e)}
                 />
             )}
         </>

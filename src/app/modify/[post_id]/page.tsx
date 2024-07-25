@@ -3,22 +3,22 @@ import React, { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { getPostData, modifyPost } from "./action";
 import dynamic from "next/dynamic";
-import { z } from "zod";
 import { Post } from "@/app/export/DTO";
 const PostEditor = dynamic(
     () => import("@/app/component/mobile/Community/Editor"),
     { ssr: false }
 );
 
-export default function WriteForm({ params }: { params: { post_id: number } }) {
+export default function EditForm({ params }: { params: { post_id: number } }) {
     const post_id = params.post_id;
     const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
+    const [content, setContent] = useState<string>("");
     const [blind, setBlind] = useState(false);
     const [board, setBoard] = useState("");
     const router = useRouter();
     const editorRef = useRef<any>(null);
     const isLoadingRef = useRef(false);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function getPost() {
@@ -28,6 +28,7 @@ export default function WriteForm({ params }: { params: { post_id: number } }) {
                 setContent(post.content);
                 setBlind(post.author === "익명");
                 setBoard(post.boardType);
+                setIsLoading(false);
             } catch (error) {
                 alert("비정상적인 접근");
                 router.back();
@@ -91,43 +92,46 @@ export default function WriteForm({ params }: { params: { post_id: number } }) {
                         </li>
                     </ul>
                 </nav>
-                <main className="px-4 flex flex-grow flex-col flex-1 h-full w-full justify-center items-center z-10">
-                    <input
-                        type="text"
-                        onChange={(e) => setTitle(e.target.value)}
-                        value={title}
-                        className="w-full font-semibold my-4 outline-none"
-                        placeholder="제목"
-                        required={true}
-                    />
-                    <div className="divider bg-gray-300 w-full h-[1px]" />
-
-                    <PostEditor
-                        editorRef={editorRef}
-                        initialValue={content}
-                        setValues={(e) => setContent(e)}
-                    />
-                </main>
+                {!isLoading && (
+                    <main className="px-4 flex flex-grow flex-col flex-1 h-full w-full justify-center items-center z-10">
+                        <input
+                            type="text"
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            className="w-full font-semibold my-4 outline-none"
+                            placeholder="제목"
+                            required={true}
+                        />
+                        <div className="divider bg-gray-300 w-full h-[1px]" />
+                        <PostEditor
+                            editorRef={editorRef}
+                            initialValue={content}
+                            setContent={setContent}
+                        />
+                    </main>
+                )}
             </form>
-            <footer className="fixed bottom-0 w-full p-3 px-4 bg-white flex flex-row justify-end items-center z-20">
-                <div className="space-x-1 flex items-center">
-                    <input
-                        id="blind"
-                        type="checkbox"
-                        checked={blind}
-                        onChange={(e) => {
-                            setBlind(e.target.checked);
-                        }}
-                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                    />
-                    <label
-                        htmlFor="blind"
-                        className="text-blue-600 font-bold text-base"
-                    >
-                        익명
-                    </label>
-                </div>
-            </footer>
+            {!isLoading && (
+                <footer className="fixed bottom-0 w-full p-3 px-4 bg-white flex flex-row justify-end items-center z-20">
+                    <div className="space-x-1 flex items-center">
+                        <input
+                            id="blind"
+                            type="checkbox"
+                            checked={blind}
+                            onChange={(e) => {
+                                setBlind(e.target.checked);
+                            }}
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                        />
+                        <label
+                            htmlFor="blind"
+                            className="text-blue-600 font-bold text-base"
+                        >
+                            익명
+                        </label>
+                    </div>
+                </footer>
+            )}
         </>
     );
 }
