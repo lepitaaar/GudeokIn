@@ -221,9 +221,9 @@ export default function CommunityComponent({
     const [postlist, setPostlist] = useState<PostResponse>();
     const [boards] = useState<Board[]>(boardlist);
     const [selectedBoard, setSelectedBoard] = useState<string>(
-        params.get("board") ?? "all"
+        params?.get("board") ?? "all"
     );
-    const [page, setPage] = useState<number>(parseInt(params.get("p") ?? "1"));
+    const [page, setPage] = useState<number>(parseInt(params?.get("p") ?? "1"));
     const [isLoading, setLoading] = useState(true);
     const [chuchunMode, setChuchunMode] = useState(false);
     const [visitedPosts, setVisitedPosts] = useState<any[]>([]);
@@ -284,7 +284,7 @@ export default function CommunityComponent({
         const clickedPage = event.selected + 1;
         setPage(clickedPage);
         router.push(
-            `/community?board=${params.get("board") ?? "all"}&p=${clickedPage}`
+            `/community?board=${params?.get("board") ?? "all"}&p=${clickedPage}`
         );
     };
     // 방문한 게시글 ID 리스트를 가져오는 함수

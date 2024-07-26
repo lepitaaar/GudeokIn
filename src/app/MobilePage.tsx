@@ -9,6 +9,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { User } from "./export/DTO";
 import Image from "next/image";
 import "moment/locale/ko";
+import BettingComponent from "./component/common/Betting/BettingComponent";
+import BettingAdmin from "./component/common/Betting/BettingAdmin";
 
 function dday() {
     const today = new Date();
@@ -59,7 +61,9 @@ export default function MobilePage({
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
-    const [alertMessage, setAlertMessage] = useState(searchParams.get("alert"));
+    const [alertMessage, setAlertMessage] = useState(
+        searchParams?.get("alert")
+    );
 
     useEffect(() => {
         if (alertMessage) {
@@ -204,6 +208,10 @@ export default function MobilePage({
                         </Link>
                     </div>
                 </div>
+
+                {(user?.role ?? 0) >= 2 && <BettingAdmin />}
+
+                <BettingComponent />
 
                 {schedule.length > 0 && (
                     <Link href={"/diary"}>

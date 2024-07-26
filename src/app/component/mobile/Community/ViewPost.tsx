@@ -10,6 +10,7 @@ import axios from "@/app/lib/axios";
 import { AxiosResponse, isAxiosError } from "axios";
 import { changeDateFormat } from "@/app/lib/util";
 import DOMPurify from "isomorphic-dompurify";
+import moment from "moment";
 
 interface CommentResponse {
     message: string;
@@ -159,7 +160,7 @@ export default function MobileViewPost({
 
                         <div className="flex flex-col text-sm">
                             <p className="font-semibold">{post.author}</p>
-                            <p>{changeDateFormat(post.date)}</p>
+                            <p>{moment(post.date).format("MM/DD hh:mm")}</p>
                         </div>
                     </div>
                     <div className="content-body w-full space-y-2">

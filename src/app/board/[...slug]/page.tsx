@@ -38,7 +38,9 @@ export default async function ViewPost({
         if (verified.ok) {
             current_user = await getUserByUUID(verified.payload!.uuid);
             author = current_user?.uuid === user?.uuid;
-            author = (current_user?.role ?? 0) >= 1;
+            if (current_user!.role >= 1) {
+                author = true;
+            }
         }
         const permission = (
             await db.query(

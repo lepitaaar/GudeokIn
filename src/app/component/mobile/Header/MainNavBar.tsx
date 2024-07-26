@@ -34,10 +34,6 @@ export default function MobileMainNavBar({
     const router = useRouter();
 
     useEffect(() => {
-        // const token = getCookie("accessToken");
-        // if (token !== undefined && String(token).length > 0) {
-        //     setLogin(true);
-        // }
         const checkMe = async () => {
             try {
                 await axios.get(`/api/auth/me`);

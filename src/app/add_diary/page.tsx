@@ -11,7 +11,7 @@ import { Suspense } from "react";
 function DiaryComponent() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const dateParam = searchParams.get("date");
+    const dateParam = searchParams?.get("date");
     const initialDate = dateParam
         ? moment(dateParam, "YYYY-MM-DD").toDate()
         : new Date();

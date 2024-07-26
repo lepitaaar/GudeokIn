@@ -192,7 +192,7 @@ export async function DELETE(req: NextRequest) {
         )
     ).recordset?.[0].uuid;
 
-    if (author_uuid !== user.payload?.uuid) {
+    if (author_uuid !== user.payload?.uuid && user.payload!.role < 1) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
     }
 
