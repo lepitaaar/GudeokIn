@@ -221,7 +221,7 @@ export default function MyEditor({
                     [{ size: fontSizeArr }],
                     [{ align: ["justify", "center", "right"] }],
                     ["bold", "italic", "underline", "strike"],
-                    ["link", "image", "video"],
+                    ["link", "image"],
                     [{ color: colorOptions }, { background: colorOptions }],
                     [
                         { list: "ordered" },
