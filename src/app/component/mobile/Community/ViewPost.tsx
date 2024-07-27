@@ -2,7 +2,7 @@
 
 import { Comment, Post } from "@/app/export/DTO";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import Image from "next/image";
 import MobileCommentLayout from "./CommentLayout";
 import ReactTextareaAutosize from "react-textarea-autosize";
@@ -66,7 +66,7 @@ export default function MobileViewPost({
         }
     };
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getComments();
         markPostAsVisited(post.post_id);
     }, []);
