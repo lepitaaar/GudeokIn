@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
         team1: body.team1,
         team2: body.team2,
         start: body.start,
-        end: moment(body.start).add(10, "s").format("YYYY-MM-DD HH:mm:ss"),
+        end: moment(body.start).add(10, "m").format("YYYY-MM-DD HH:mm:ss"),
     });
     return NextResponse.json({
         message: "success",

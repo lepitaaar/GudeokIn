@@ -118,7 +118,7 @@ const BettingComponent = () => {
         }
     };
 
-    const nanPrevent = (value: any) => {
+    const nanPrevent = (value: any): number => {
         if (isNaN(value)) {
             return 0;
         }
@@ -195,7 +195,10 @@ const BettingComponent = () => {
                                 {team1}
                             </p>
                             <p className="text-4xl font-bold text-blue-600">
-                                {nanPrevent((countTeam1 / total) * 100)}%
+                                {nanPrevent((countTeam1 / total) * 100).toFixed(
+                                    1
+                                )}
+                                %
                             </p>
                             <div className="w-full h-2 mt-2 flex justify-end">
                                 <div
@@ -231,7 +234,10 @@ const BettingComponent = () => {
                                 {team2}
                             </p>
                             <p className="text-4xl font-bold text-red-600">
-                                {nanPrevent((countTeam2 / total) * 100)}%
+                                {nanPrevent((countTeam2 / total) * 100).toFixed(
+                                    1
+                                )}
+                                %
                             </p>
                             <div className="w-full h-2 mt-2 flex justify-start">
                                 <div
