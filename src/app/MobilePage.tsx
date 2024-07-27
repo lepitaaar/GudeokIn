@@ -277,6 +277,18 @@ export default function MobilePage({
                     </Link>
                 )}
 
+                <div
+                    className="border border-solid border-1 p-3 shadow-sm rounded-lg cursor-pointer"
+                    onClick={() => {
+                        router.push(`/gift`);
+                    }}
+                >
+                    <p className="text-xl font-bold">
+                        E-Sports{" "}
+                        <span className="text-blue-600">경품 당첨자</span>{" "}
+                        확인하기 👉
+                    </p>
+                </div>
                 <div className="Sooneung-Counter border border-solid border-1 p-3 shadow-sm rounded-lg">
                     <p className="text-xl font-bold">
                         대학수학능력시험{" "}
