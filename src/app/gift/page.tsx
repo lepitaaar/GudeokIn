@@ -2,7 +2,7 @@ import Image from "next/image";
 import NavBarLayout from "../component/mobile/Header/NavBarLayout";
 import { db } from "../lib/database";
 import { getUserByUUID } from "../lib/user";
-
+export const dynamic = "auto";
 export default async function GiftPage() {
     const gift = (await db.query(`select * from everytime.gift`)).recordset;
     return (
