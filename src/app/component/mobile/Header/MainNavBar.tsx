@@ -6,6 +6,7 @@ import LoginModal from "./Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import axios from "@/app/lib/axios";
+import { isAxiosError } from "axios";
 
 interface Credentials {
     username: string;
@@ -82,8 +83,12 @@ export default function MobileMainNavBar({
             setLogin(true);
             router.refresh();
         } catch (error) {
-            console.error("Error during login:", error);
-            errorMessage = "예상치 못한 오류가 발생했습니다";
+            if (isAxiosError(error) && error.response) {
+                alert(error.response.data.message);
+            } else {
+                console.error("Error during login:", error);
+                errorMessage = "예상치 못한 오류가 발생했습니다";
+            }
         } finally {
             if (errorMessage.length != 0) {
                 window.alert(errorMessage);

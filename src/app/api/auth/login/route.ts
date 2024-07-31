@@ -1,47 +1,66 @@
 import { NextRequest, NextResponse } from "next/server";
+import { z } from "zod";
 import { db } from "@/app/lib/database";
 import { makePasswordHash } from "@/app/lib/authUtil";
 import { refresh, sign } from "@/app/lib/jwtUtil";
-import { User } from "@/app/export/DTO";
 import { getUserByUUID } from "@/app/lib/user";
 
-function isNullOrWhitespace(input: String) {
-    return input == null || input.toString().trim() == "";
-}
+// Define the schema for the request parameters
+const loginSchema = z.object({
+    id: z.string().min(1, { message: "ID는 필수 항목입니다." }),
+    pw: z.string().min(1, { message: "비밀번호는 필수 항목입니다." }),
+});
 
 export async function POST(request: NextRequest) {
     try {
         const params = request.nextUrl.searchParams;
-        //console.log(params)
-        const id = params.get("id") ?? "";
-        const pw = params.get("pw") ?? "";
+
+        // Parse and validate the request parameters
+        const parseResult = loginSchema.safeParse({
+            id: params.get("id"),
+            pw: params.get("pw"),
+        });
+
+        // If the validation fails, return a 400 response with the validation errors
+        if (!parseResult.success) {
+            return NextResponse.json(
+                {
+                    message: "값이 비어있습니다.",
+                    // errors: parseResult.error.errors,
+                },
+                {
+                    status: 400,
+                }
+            );
+        }
+
+        const { id, pw } = parseResult.data;
         const ip =
             request.headers.get("X-Real-IP") ??
             request.headers.get("X-Forwarded-For") ??
             "127.0.0.1";
         console.log(`${ip} request login api . ${id}`);
 
-        if (isNullOrWhitespace(id) || isNullOrWhitespace(pw)) {
-            return NextResponse.json(
-                {
-                    message: "값이 비어있습니다.",
-                },
-                {
-                    status: 500,
-                }
-            );
-        }
         const existUser = await db.query(
-            `select username,uuid,refreshToken,password from everytime.users where username = @id`,
+            `select username, uuid, refreshToken, password from everytime.users where username = @id`,
             {
                 id: id,
             }
         );
+
+        if (existUser.recordset.length === 0) {
+            return NextResponse.json(
+                {
+                    message: "로그인 정보가 일치하지 않습니다.",
+                },
+                {
+                    status: 403,
+                }
+            );
+        }
+
         const hashedPw = await makePasswordHash(id, pw);
-        if (
-            existUser.recordset.length == 0 ||
-            hashedPw !== existUser.recordset[0].password
-        ) {
+        if (hashedPw !== existUser.recordset[0].password) {
             return NextResponse.json(
                 {
                     message: "로그인 정보가 일치하지 않습니다.",
@@ -54,25 +73,10 @@ export async function POST(request: NextRequest) {
 
         const user = existUser.recordset[0];
 
-        //check Valid User
-        /**
-         * if (user == undefined) {
-            //login failed
-            return NextResponse.json(
-                {
-                    message: "로그인 정보가 일치하지 않습니다.",
-                },
-                {
-                    status: 401,
-                }
-            );
-        }
-         */
-
         const refreshToken = user.refreshToken ?? refresh();
         const user_data = await getUserByUUID(user.uuid);
         if (!user_data) {
-            //login failed
+            // Login failed
             return NextResponse.json(
                 {
                     message: "로그인 정보가 일치하지 않습니다.",
@@ -82,6 +86,7 @@ export async function POST(request: NextRequest) {
                 }
             );
         }
+
         const accessToken = sign(user_data);
 
         if (user.refreshToken == undefined) {
