@@ -67,33 +67,34 @@ export async function GET(req: NextRequest) {
         )
     ).recordset;
 
-    if (duplicate.length > 0) {
-        return NextResponse.json(
-            {
-                message: "이미 회원가입 되어있습니다.",
-            },
-            {
-                status: 409,
-            }
-        );
-    }
+    // if (duplicate.length > 0) {
+    //     return NextResponse.json(
+    //         {
+    //             message: "이미 회원가입 되어있습니다.",
+    //         },
+    //         {
+    //             status: 409,
+    //         }
+    //     );
+    // }
 
     await redis.setEx(`code:${data.email}`, 300, code.toString());
 
-    // Here, you would send the code via email using your email service
-    let transporter = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 465,
+    var transporter = nodemailer.createTransport({
+        host: "mail.gudeok.kr",
+        port: 587,
         auth: {
-            user: "gudeok.in@gmail.com", // Gmail 주소
-            pass: "ljeu golk hswy vqrw", // Gmail 비밀번호 or 앱 비밀번호
+            user: "no_reply@gudeok.kr",
+            pass: process.env.MAIL_PW,
         },
-        secure: true,
+        tls: {
+            rejectUnauthorized: false,
+        },
     });
-
     let mailOptions = {
         to: data.email,
-        subject: "구덕인 인증코드",
+        from: "구덕인 <no_reply@gudeok.kr>",
+        subject: "[구덕인] 회원가입 이메일 인증",
         html: `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>

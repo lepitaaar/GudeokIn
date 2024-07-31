@@ -52,6 +52,7 @@ export default function AccountSetup() {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [errors, setErrors] = useState<any>({});
     const [options, setOptions] = useState<string[]>([]);
+    const [emailHelp, setEmailHelp] = useState("");
     const router = useRouter();
 
     useEffect(() => {
@@ -95,16 +96,20 @@ export default function AccountSetup() {
                     setNumber(detail!.number);
                     setCountdown(300);
                     setShowVerificationField(true);
+                    setErrors({
+                        email: null,
+                    });
+                    setEmailHelp(
+                        "인증코드가 전송되었습니다. 이메일함 혹은 스팸 메일함 확인해주세요"
+                    );
                 }
             } catch (error: any) {
-                if (isAxiosError(error)) {
-                    setErrors({
-                        ...errors,
-                        email:
-                            error.response?.data?.message ||
-                            "유효하지 않은 이메일입니다.",
-                    });
-                }
+                setErrors({
+                    ...errors,
+                    email:
+                        error.response?.data?.message ||
+                        "2024학번@gudeok.hs.kr 형태로 작성해주세요",
+                });
                 console.log(error);
             }
         }
@@ -198,7 +203,7 @@ export default function AccountSetup() {
                                         variant="outlined"
                                         fullWidth
                                         error={Boolean(errors.email)}
-                                        helperText={errors.email}
+                                        helperText={errors.email ?? emailHelp}
                                         placeholder="20241211@gudeok.hs.kr"
                                         className={`${
                                             errors.email
@@ -239,7 +244,7 @@ export default function AccountSetup() {
                                                                 disabled={
                                                                     emailVerified
                                                                 }
-                                                                className="bg-gray-300"
+                                                                className="bg-white"
                                                             >
                                                                 발송
                                                             </Button>
@@ -291,7 +296,7 @@ export default function AccountSetup() {
                                                         emailVerified ||
                                                         countdown === 0
                                                     }
-                                                    className="bg-gray-300"
+                                                    className="bg-white"
                                                 >
                                                     확인
                                                 </Button>
