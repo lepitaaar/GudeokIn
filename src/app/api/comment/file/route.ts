@@ -91,17 +91,11 @@ export async function POST(req: NextRequest) {
 
     var processedBuffer: Buffer | null = null;
     const resizeOption = width! >= 700 ? { width: 700 } : { width: width };
-    if (mimeType == "image/gif") {
-        processedBuffer = await sharp(buffer, { animated: true })
-            .resize(resizeOption)
-            .toFormat("webp")
-            .toBuffer();
-    } else {
-        processedBuffer = await sharp(buffer)
-            .resize(resizeOption)
-            .toFormat("webp")
-            .toBuffer();
-    }
+
+    processedBuffer = await sharp(buffer, { animated: true })
+        .resize(resizeOption)
+        .toFormat("webp")
+        .toBuffer();
 
     const processed = await sharp(processedBuffer).metadata();
 

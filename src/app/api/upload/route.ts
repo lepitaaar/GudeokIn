@@ -41,20 +41,19 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
                 300
             )}.webp`; //${mimeType.split("/")[1]}
 
-            var processedBuffer: Buffer | null = null;
-            if (mimeType == "image/gif") {
-                processedBuffer = await sharp(buffer, { animated: true })
-                    .toFormat("webp")
-                    .toBuffer();
-            } else {
-                processedBuffer = await sharp(buffer)
-                    // .toFormat(mimeType.split("/")[1] as keyof sharp.FormatEnum)
-                    .toFormat("webp")
-                    .toBuffer();
-            }
+            const metadata = await sharp(buffer).metadata();
+            const { width } = metadata;
 
-            const metadata = await sharp(processedBuffer).metadata();
-            const { width, height } = metadata;
+            var processedBuffer: Buffer | null = null;
+            const resizeOption =
+                width! >= 700 ? { width: 700 } : { width: width };
+
+            processedBuffer = await sharp(buffer, { animated: true })
+                .resize(resizeOption)
+                .toFormat("webp")
+                .toBuffer();
+
+            const processed = await sharp(processedBuffer).metadata();
 
             const { key, loc } = await uploadFile(
                 uniqueFilename,
@@ -63,8 +62,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
             complete_files.push({
                 name: key,
                 url: loc,
-                width: width,
-                height: height,
+                width: processed.width,
+                height: processed.height,
             });
         }
 

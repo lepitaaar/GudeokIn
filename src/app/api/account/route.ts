@@ -103,15 +103,16 @@ export async function POST(req: NextRequest) {
         // Generate a random filename to avoid original filename issues
         const uniqueFilename = `${new Date().getTime()}${randomInt(300)}.webp`; //${mimeType.split("/")[1]}
 
-        // Process the image using sharp to strip metadata
+        const metadata = await sharp(buffer).metadata();
+        const { width } = metadata;
+
         var processedBuffer: Buffer | null = null;
-        if (mimeType == "image/gif") {
-            processedBuffer = await sharp(buffer, { animated: true })
-                .toFormat("webp")
-                .toBuffer();
-        } else {
-            processedBuffer = await sharp(buffer).toFormat("webp").toBuffer();
-        }
+        const resizeOption = width! >= 700 ? { width: 700 } : { width: width };
+
+        processedBuffer = await sharp(buffer, { animated: true })
+            .resize(resizeOption)
+            .toFormat("webp")
+            .toBuffer();
 
         const { key, loc } = await uploadFile(uniqueFilename, processedBuffer);
 
