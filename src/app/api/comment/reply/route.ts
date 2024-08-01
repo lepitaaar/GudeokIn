@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
         const token = req.headers.get("Authorization")?.split(" ")[1] ?? "";
         const user = verify(token);
         const commentRes = await db.query(
-            `SELECT id, post_id,[group],seq,comment,uuid,date,author FROM everytime.comment where post_id = @post and [group] = @group and seq != 1 and deleted = 0;`,
+            `SELECT id, post_id,[group],seq,comment,uuid,date,author,type,width,height FROM everytime.comment where post_id = @post and [group] = @group and seq != 1 and deleted = 0;`,
             {
                 post: valid.post_id,
                 group: valid.group,

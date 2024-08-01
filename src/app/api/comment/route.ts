@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
     const user = verify(token);
 
     const commentRes = await db.query(
-        `SELECT id, post_id,[group],seq,comment,uuid,date,author FROM everytime.comment where post_id = @post and deleted = 0 ORDER BY [group] asc;`,
+        `SELECT id, post_id,[group],seq,comment,uuid,date,author,type,width,height FROM everytime.comment where post_id = @post and deleted = 0 ORDER BY [group] asc;`,
         {
             post: post_id,
         }
@@ -75,8 +75,9 @@ export async function GET(req: NextRequest) {
 const schema = z.object({
     post: z.number(),
     parent: z.number().optional(),
-    comment: z.string().max(300),
+    comment: z.string().max(300).min(1),
     blind: z.boolean(),
+    type: z.string().optional(),
 });
 
 export async function POST(req: NextRequest) {
@@ -127,7 +128,7 @@ export async function POST(req: NextRequest) {
     SELECT @nickname = nickname FROM everytime.user_info WHERE uuid = @user_uuid;
     INSERT INTO everytime.comment ([group], seq, post_id, comment, uuid, date, author) VALUES (@group, @seq, @post_id, @comment, @user_uuid, @date, @nickname)
     `;
-    console.log(payload?.uuid);
+
     if (body.blind) {
         const author_uuid = (
             await db.query(

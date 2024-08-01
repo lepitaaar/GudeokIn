@@ -56,7 +56,10 @@ export interface Comment {
     uuid: string;
     date: string;
     author: string;
+    type: string;
     profileImg: string;
     isAuthor: boolean;
+    width?: number;
+    height?: number;
     reply?: Comment[];
 }
