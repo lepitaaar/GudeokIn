@@ -3,6 +3,7 @@ import NavBarLayout from "../component/mobile/Header/NavBarLayout";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import WithSkeletonImage from "../component/common/WithSkeletonImage";
 
 export const metadata: Metadata = {
     title: "대학 입시 정보",
@@ -18,7 +19,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/pusan.png`}
                             alt="대학교"
                             width={300}
@@ -33,7 +34,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/pukyung.gif`}
                             alt="대학교"
                             width={300}
@@ -48,7 +49,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/dong-eui.png`}
                             alt="대학교"
                             width={300}
@@ -63,7 +64,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/dong-a.jpg`}
                             alt="대학교"
                             width={300}
@@ -78,7 +79,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/dongseo.jpg`}
                             alt="대학교"
                             width={300}
@@ -93,7 +94,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/inje.jpg`}
                             alt="대학교"
                             width={300}
@@ -108,7 +109,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/kyungpook.png`}
                             alt="대학교"
                             width={300}
@@ -123,7 +124,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/seoul.png`}
                             alt="대학교"
                             width={300}
@@ -138,7 +139,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/korea.jpg`}
                             alt="대학교"
                             width={300}
@@ -153,7 +154,7 @@ export default function University() {
                     className="flex-1"
                 >
                     <div className="flex flex-col border border-solid border-1 p-3 shadow-sm rounded-lg justify-center place-items-center space-y-2">
-                        <Image
+                        <WithSkeletonImage
                             src={`/yonsei.png`}
                             alt="대학교"
                             width={300}
