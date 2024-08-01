@@ -11,6 +11,7 @@ import Image from "next/image";
 import "moment/locale/ko";
 import BettingComponent from "./component/common/Betting/BettingComponent";
 import BettingAdmin from "./component/common/Betting/BettingAdmin";
+import WithSkeletonImage from "./component/common/WithSkeletonImage";
 
 function dday() {
     const today = new Date();
@@ -299,7 +300,7 @@ export default function MobilePage({
                 <div className="flex flex-row justify-around items-center rounded-lg py-2">
                     <Link href={`https://adiga.kr`} target={"_blank"}>
                         <div className="flex flex-col justify-center items-center">
-                            <Image
+                            <WithSkeletonImage
                                 src={"/adiga_logo.png"}
                                 className="w-12 h-12 object-contain"
                                 width={112}
@@ -315,7 +316,7 @@ export default function MobilePage({
                         target={"_blank"}
                     >
                         <div className="flex flex-col justify-center items-center">
-                            <Image
+                            <WithSkeletonImage
                                 src={"/pusan.png"}
                                 className="w-12 h-12"
                                 width={1049}
@@ -331,7 +332,7 @@ export default function MobilePage({
                         target={"_blank"}
                     >
                         <div className="flex flex-col justify-center items-center">
-                            <Image
+                            <WithSkeletonImage
                                 src={"/pukyung.gif"}
                                 className="w-12 h-12"
                                 width={504}
@@ -347,7 +348,7 @@ export default function MobilePage({
                         target={"_blank"}
                     >
                         <div className="flex flex-col justify-center items-center">
-                            <Image
+                            <WithSkeletonImage
                                 src={"/dong-a.jpg"}
                                 className="w-12 h-12"
                                 width={400}
@@ -363,7 +364,7 @@ export default function MobilePage({
                         target={"_blank"}
                     >
                         <div className="flex flex-col justify-center items-center">
-                            <Image
+                            <WithSkeletonImage
                                 src={"/dong-eui.png"}
                                 className="w-12 h-12"
                                 width={250}
