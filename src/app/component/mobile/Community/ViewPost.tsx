@@ -10,6 +10,7 @@ import { AxiosResponse, isAxiosError } from "axios";
 import DOMPurify from "isomorphic-dompurify";
 import moment from "moment";
 import ReplyLayout from "./ReplyLayout";
+import { LoadingSpinner } from "../../common/LoadingSpinner";
 
 interface CommentResponse {
     message: string;
@@ -30,10 +31,11 @@ export default function MobileViewPost({
     author: boolean;
 }) {
     const router = useRouter();
-    // const searchParams = useSearchParams();
     const [commentList, setCommentlist] = useState<Comment[]>([]);
     const [gaechu, setGaechu] = useState(like);
     const [beechu, setBeechu] = useState(dislike);
+    const [imageLoading, setLoading] = useState(false);
+    // const searchParams = useSearchParams();
 
     const onClose = () => {
         /*router.push(
@@ -106,6 +108,7 @@ export default function MobileViewPost({
 
     return (
         <div>
+            {imageLoading && <LoadingSpinner />}
             <nav className="border border-none z-10 w-full h-[56px] shadow">
                 <ul className="flex flex-row items-center justify-center h-full w-full">
                     <li className="flex-1 ml-3">
@@ -222,7 +225,11 @@ export default function MobileViewPost({
                 <div className="comment divide-y-[1px] divide-solid space-y-2 pb-5">
                     {commentList.map((cm, index) => {
                         return (
-                            <MobileCommentLayout commentProp={cm} key={index} />
+                            <MobileCommentLayout
+                                setLoading={setLoading}
+                                commentProp={cm}
+                                key={index}
+                            />
                         );
                     })}
                 </div>
