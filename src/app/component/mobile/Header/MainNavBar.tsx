@@ -7,6 +7,7 @@ import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import axios from "@/app/lib/axios";
 import { isAxiosError } from "axios";
+import useFcmToken from "@/app/hooks/useFcmToken";
 
 interface Credentials {
     username: string;
@@ -32,6 +33,7 @@ export default function MobileMainNavBar({
     const [showModal, setShowModal] = useState(loginModal);
     const [isLogin, setLogin] = useState(false);
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
+    const { token, notificationPermissionStatus } = useFcmToken();
     const router = useRouter();
 
     useEffect(() => {
@@ -51,7 +53,7 @@ export default function MobileMainNavBar({
         let errorMessage = "";
         try {
             const response = await fetch(
-                `/api/auth/login?id=${credentials.username}&pw=${credentials.password}`,
+                `/api/auth/login?id=${credentials.username}&pw=${credentials.password}&fcm=${token}`,
                 {
                     method: "POST",
                     headers: {

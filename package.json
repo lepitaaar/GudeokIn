@@ -3,9 +3,9 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev -p 6606",
+        "dev": "next dev -p 6606 --experimental-https",
         "build": "next build",
-        "start": "next start -p 6605",
+        "start": "next start -p 6607",
         "lint": "next lint"
     },
     "dependencies": {
@@ -43,7 +43,8 @@
         "eslint-plugin-import": "^2.29.1",
         "eslint-plugin-react": "^7.35.0",
         "eslint-plugin-react-hooks": "^4.6.2",
-        "firebase": "^10.12.3",
+        "firebase": "^10.12.5",
+        "firebase-admin": "^12.3.0",
         "formidable": "^3.5.1",
         "isomorphic-dompurify": "^2.13.0",
         "jose": "^5.4.0",

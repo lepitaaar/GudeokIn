@@ -6,7 +6,7 @@ const client = createClient({
     url,
 });
 client.on("connect", () => {
-    console.log("REDIS CONNECTED");
+    console.log("레디스 서버 연결");
 });
 client.on("error", function (error) {
     console.error(error);

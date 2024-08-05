@@ -12,6 +12,8 @@ import "moment/locale/ko";
 import BettingComponent from "./component/common/Betting/BettingComponent";
 import BettingAdmin from "./component/common/Betting/BettingAdmin";
 import WithSkeletonImage from "./component/common/WithSkeletonImage";
+import useFcmToken from "@/app/hooks/useFcmToken";
+import { fetchToken } from "./lib/firebase";
 
 function dday() {
     const today = new Date();
@@ -47,7 +49,27 @@ interface LoginDTO {
     accessToken: string;
     refreshToken: string;
 }
+async function getNotificationPermissionAndToken() {
+    if (!("Notification" in window)) {
+        console.info("This browser does not support desktop notification");
+        return null;
+    }
 
+    // Step 2: Check if permission is already granted.
+    if (Notification.permission === "granted") {
+        return await fetchToken();
+    }
+
+    if (Notification.permission !== "denied") {
+        const permission = await Notification.requestPermission();
+        if (permission === "granted") {
+            return await fetchToken();
+        }
+    }
+
+    console.log("Notification permission not granted.");
+    return null;
+}
 export default function MobilePage({
     user,
     schedule,
@@ -59,6 +81,7 @@ export default function MobilePage({
     lunch: string;
     dinner: string;
 }) {
+    const { token, notificationPermissionStatus } = useFcmToken();
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -77,9 +100,10 @@ export default function MobilePage({
     const handleLogin = async (credentials: Credentials) => {
         //null check credentials
         let errorMessage = "";
+        var token = null;
         try {
             const response = await fetch(
-                `/api/auth/login?id=${credentials.username}&pw=${credentials.password}`,
+                `/api/auth/login?id=${credentials.username}&pw=${credentials.password}&fcm=${token}`,
                 {
                     method: "POST",
                     headers: {
@@ -124,6 +148,7 @@ export default function MobilePage({
                 onClose={() => setShowModal(false)}
                 onLogin={handleLogin}
             />
+
             <main className="flex flex-col space-y-3 mt-3 mx-3 mb-8">
                 <div className="helloCard border border-solid rounded-lg p-3 border-1 border-neutral-300 shadow-sm cursor-pointer">
                     {user ? (

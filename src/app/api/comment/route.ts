@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { verify } from "@/app/lib/jwtUtil";
 import moment from "moment";
-import { getUserByUUID } from "@/app/lib/user";
+import { getAuthorByPostID, getUserByUUID } from "@/app/lib/user";
+import { redis } from "@/app/lib/redis";
+import { SendPush } from "@/app/lib/push";
 
 export async function GET(req: NextRequest) {
     const params = req.nextUrl.searchParams;
@@ -102,7 +104,7 @@ export async function POST(req: NextRequest) {
     const payload = verify(token).payload;
 
     const commentRes = await db.query(
-        `SELECT [group], seq FROM everytime.comment where post_id = @post and deleted = 0 ORDER BY [group] desc;`,
+        `SELECT [group], seq, uuid FROM everytime.comment where post_id = @post and deleted = 0 ORDER BY [group] desc;`,
         {
             post: body.post,
         }
@@ -112,8 +114,10 @@ export async function POST(req: NextRequest) {
     if (comments.length != 0) {
         group = comments[0].group + 1;
     }
+
+    var parentComment: Comment[] | undefined = undefined;
     if (body.parent != undefined) {
-        const parentComment = comments.filter((c) => c.group == body.parent);
+        parentComment = comments.filter((c) => c.group == body.parent);
         if (parentComment.length != 0) {
             group = body.parent;
             parentComment.sort((a, b) => b.seq - a.seq);
@@ -162,6 +166,43 @@ export async function POST(req: NextRequest) {
             user_uuid: payload?.uuid,
             date: moment().format("YYYY-MM-DD HH:mm:ss"),
         });
+    }
+
+    const user = await getAuthorByPostID(body.post);
+    if (user?.uuid && user?.uuid !== payload?.uuid) {
+        // 글쓴이와 댓글작성자가 같지않은경우
+        const fcm_token = await redis.hGet(`fcm`, user!.uuid);
+        if (fcm_token) {
+            SendPush(
+                fcm_token,
+                `${
+                    body.blind
+                        ? "익명"
+                        : (await getUserByUUID(payload!.uuid))!.nickname
+                }님의 댓글`,
+                body.comment
+            );
+        }
+    }
+    if (body.parent && parentComment?.length !== 0) {
+        for (const comment of parentComment!) {
+            if (comment.uuid === undefined || comment.uuid === payload?.uuid)
+                continue;
+            /** 이중 푸시 방지 */
+            if (comment.uuid === user?.uuid) continue;
+            const fcm_token = await redis.hGet(`fcm`, comment.uuid);
+            if (fcm_token) {
+                SendPush(
+                    fcm_token,
+                    `${
+                        body.blind
+                            ? "익명"
+                            : (await getUserByUUID(payload!.uuid))!.nickname
+                    }님의 댓글`,
+                    body.comment
+                );
+            }
+        }
     }
 
     return NextResponse.json(

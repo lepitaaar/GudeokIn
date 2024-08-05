@@ -4,11 +4,13 @@ import { db } from "@/app/lib/database";
 import { makePasswordHash } from "@/app/lib/authUtil";
 import { refresh, sign } from "@/app/lib/jwtUtil";
 import { getUserByUUID } from "@/app/lib/user";
+import { redis } from "@/app/lib/redis";
 
 // Define the schema for the request parameters
 const loginSchema = z.object({
     id: z.string().min(1, { message: "ID는 필수 항목입니다." }),
     pw: z.string().min(1, { message: "비밀번호는 필수 항목입니다." }),
+    fcm: z.string().optional().nullable(),
 });
 
 export async function POST(request: NextRequest) {
@@ -19,6 +21,7 @@ export async function POST(request: NextRequest) {
         const parseResult = loginSchema.safeParse({
             id: params.get("id"),
             pw: params.get("pw"),
+            fcm: params.get("fcm") ?? null,
         });
 
         // If the validation fails, return a 400 response with the validation errors
@@ -26,7 +29,7 @@ export async function POST(request: NextRequest) {
             return NextResponse.json(
                 {
                     message: "값이 비어있습니다.",
-                    // errors: parseResult.error.errors,
+                    errors: parseResult.error.errors,
                 },
                 {
                     status: 400,
@@ -34,7 +37,7 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const { id, pw } = parseResult.data;
+        const { id, pw, fcm } = parseResult.data;
         const ip =
             request.headers.get("X-Real-IP") ??
             request.headers.get("X-Forwarded-For") ??
@@ -97,6 +100,10 @@ export async function POST(request: NextRequest) {
                     uuid: user.uuid,
                 }
             );
+        }
+
+        if (fcm) {
+            await redis.hSet("fcm", user.uuid, fcm);
         }
 
         return NextResponse.json(

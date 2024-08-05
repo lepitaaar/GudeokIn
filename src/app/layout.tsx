@@ -11,6 +11,7 @@ import { LoadingProvider } from "./LoadingProvider";
 import { Suspense } from "react";
 import nookies from "nookies";
 import { verifyToken, verifyTokenWithString } from "@/middleware";
+import IosNotifiDialog from "./component/mobile/IosNotifiDialog";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -192,6 +193,7 @@ export default function RootLayout({
                     <LoadingProvider>
                         {children}
                         <AddToHomeDialong />
+                        <IosNotifiDialog />
                     </LoadingProvider>
                 </Suspense>
             </body>
