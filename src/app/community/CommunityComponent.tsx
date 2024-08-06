@@ -1,6 +1,6 @@
 "use client";
 
-import MobilePostItem from "../component/mobile/Community/PostItem";
+import MobilePostItem from "../components/mobile/Community/PostItem";
 import Link from "next/link";
 import axios from "@/app/lib/axios";
 import { Board, Post } from "../export/DTO";
@@ -8,7 +8,7 @@ import { AxiosResponse, isAxiosError } from "axios";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReactPaginate from "react-paginate";
-import Loading from "@/app/component/Loading";
+import Loading from "@/app/components/Loading";
 
 export interface PostResponse {
     board: string;

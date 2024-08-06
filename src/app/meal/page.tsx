@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
-import MobileMealCarousel from "../component/mobile/Meal/MealCarousel";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
+import MobileMealCarousel from "../components/mobile/Meal/MealCarousel";
 import { getWeekdaysDates } from "../lib/util";
 import type { Metadata } from "next";
 

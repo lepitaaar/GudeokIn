@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import moment from "moment";
 import CalendarWrapper from "./CalendarWrapper";
 import type { Metadata } from "next";

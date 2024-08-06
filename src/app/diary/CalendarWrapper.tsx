@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import React from "react";
-import { CustomCalendar } from "../component/mobile/Calendar/Calendar";
+import { CustomCalendar } from "../components/mobile/Calendar/Calendar";
 import Link from "next/link";
 import moment from "moment";
 type ValuePiece = Date | null;

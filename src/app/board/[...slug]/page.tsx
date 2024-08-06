@@ -1,4 +1,4 @@
-import MobileViewPost from "@/app/component/mobile/Community/ViewPost";
+import MobileViewPost from "@/app/components/mobile/Community/ViewPost";
 import { Chuchun, Post } from "@/app/export/DTO";
 import { db } from "@/app/lib/database";
 import { getUserByUUID } from "@/app/lib/user";

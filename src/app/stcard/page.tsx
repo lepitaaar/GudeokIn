@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { BrowserMultiFormatReader, NotFoundException } from "@zxing/library";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import Modal from "react-modal";
 import Image from "next/image";
 import Barcode from "react-barcode";

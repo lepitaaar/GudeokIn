@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
             request.headers.get("X-Real-IP") ??
             request.headers.get("X-Forwarded-For") ??
             "127.0.0.1";
-        console.log(`${ip} request login api . ${id}`);
+        console.log(`${ip} request login api . ${id}, fcm: ${fcm}`);
 
         const existUser = await db.query(
             `select username, uuid, refreshToken, password from everytime.users where username = @id`,
@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
         }
 
         if (fcm) {
-            await redis.hSet("fcm", user.uuid, fcm);
+            await redis.sAdd(`fcm:${user.uuid}`, fcm);
         }
 
         return NextResponse.json(

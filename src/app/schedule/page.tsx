@@ -1,6 +1,6 @@
 import React from "react";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
-import ScheduleTable from "@/app/component/mobile/schedule/ScheduleTable";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
+import ScheduleTable from "@/app/components/mobile/schedule/ScheduleTable";
 import moment from "moment";
 import { verify } from "../lib/jwtUtil";
 import { cookies } from "next/headers";

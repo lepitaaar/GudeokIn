@@ -27,7 +27,7 @@
         "**/*.ts",
         "**/*.tsx",
         ".next/types/**/*.ts",
-        "src/app/component/mobile/Community/Editor.tsx"
+        "src/app/components/mobile/Community/Editor.tsx"
     ],
     "exclude": ["node_modules"]
 }

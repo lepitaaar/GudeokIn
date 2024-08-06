@@ -1,5 +1,5 @@
 import Image from "next/image";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import { db } from "../lib/database";
 import { getUserByUUID } from "../lib/user";
 export const dynamic = "auto";

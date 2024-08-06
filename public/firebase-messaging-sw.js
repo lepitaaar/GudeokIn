@@ -54,6 +54,14 @@ self.addEventListener("notificationclick", function (event) {
                         return client.focus();
                     }
                 }
+                // if (url) {
+                //     // Create a BroadcastChannel to communicate with the main thread
+                //     const channel = new BroadcastChannel(
+                //         "notification_channel"
+                //     );
+                //     channel.postMessage({ type: "NAVIGATE", url: url });
+                //     return;
+                // }
 
                 if (clients.openWindow) {
                     console.log("OPENWINDOW ON CLIENT");

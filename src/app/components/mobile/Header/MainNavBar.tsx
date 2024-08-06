@@ -5,9 +5,10 @@ import Link from "next/link";
 import LoginModal from "./Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import axios from "@/app/lib/axios";
 import { isAxiosError } from "axios";
 import useFcmToken from "@/app/hooks/useFcmToken";
+import { useAuth } from "../../Provider/AuthProvider";
+import axios from "@/app/lib/axios";
 
 interface Credentials {
     username: string;
@@ -31,22 +32,24 @@ export default function MobileMainNavBar({
 }) {
     const [isOpen, setIsOpen] = useState<Boolean>(false);
     const [showModal, setShowModal] = useState(loginModal);
-    const [isLogin, setLogin] = useState(false);
+    const { isLoggedIn } = useAuth();
     const [showDropdown, setShowDropdown] = useState<boolean>(false);
-    const { token, notificationPermissionStatus } = useFcmToken();
+    const { token } = useFcmToken();
     const router = useRouter();
 
     useEffect(() => {
-        const checkMe = async () => {
+        async function getToken() {
+            if (!token) return;
             try {
-                await axios.get(`/api/auth/me`);
-                setLogin(true);
+                await axios.post(`/api/auth/me`, {
+                    fcm: token,
+                });
             } catch (error) {
-                setLogin(false);
+                console.log(`Token Saved Error: ${error}`);
             }
-        };
-        checkMe();
-    }, []);
+        }
+        getToken();
+    }, [token]);
 
     const handleLogin = async (credentials: Credentials) => {
         //null check credentials
@@ -82,13 +85,13 @@ export default function MobileMainNavBar({
 
             setShowDropdown(false);
             setShowModal(false);
-            setLogin(true);
             router.refresh();
         } catch (error) {
             if (isAxiosError(error) && error.response) {
                 alert(error.response.data.message);
             } else {
                 console.error("Error during login:", error);
+                alert(error);
                 errorMessage = "예상치 못한 오류가 발생했습니다";
             }
         } finally {
@@ -102,7 +105,6 @@ export default function MobileMainNavBar({
         // Clear tokens and update login state
         deleteCookie("accessToken");
         deleteCookie("refreshToken");
-        setLogin(false);
         setShowDropdown(false);
         router.refresh();
     };
@@ -111,8 +113,8 @@ export default function MobileMainNavBar({
         setIsOpen(!isOpen);
     };
 
-    const toggleDropdown = () => {
-        if (!isLogin) {
+    const toggleDropdown = async () => {
+        if (!isLoggedIn) {
             setShowModal(true);
         } else {
             setShowDropdown(!showDropdown);
@@ -162,7 +164,7 @@ export default function MobileMainNavBar({
                                 </svg>
                                 {showDropdown && (
                                     <div className="absolute right-0 mt-7 w-48 bg-white border rounded shadow-lg z-50">
-                                        {isLogin && (
+                                        {isLoggedIn && (
                                             <>
                                                 <Link href={"/account"}>
                                                     <p className="p-4 border-b">

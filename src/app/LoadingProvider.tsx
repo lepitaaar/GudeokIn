@@ -9,7 +9,7 @@ import {
     ReactNode,
 } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
-import { LoadingSpinner } from "./component/common/LoadingSpinner";
+import { LoadingSpinner } from "./components/common/LoadingSpinner";
 
 const LoadingContext = createContext({ isLoading: false });
 

@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import axios from "../lib/axios";
-import MobilePostItem from "../component/mobile/Community/PostItem";
+import MobilePostItem from "../components/mobile/Community/PostItem";
 import { PostResponse } from "../community/CommunityComponent";
 import { AxiosResponse } from "axios";
 import { useRouter } from "next/navigation";

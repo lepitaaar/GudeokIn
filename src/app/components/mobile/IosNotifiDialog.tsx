@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { fetchToken } from "@/app/lib/firebase";
+import { useRouter } from "next/navigation";
 
 async function getNotificationPermissionAndToken() {
     if (Notification.permission !== "denied") {
         const permission = await Notification.requestPermission();
         if (permission === "granted") {
-            return await fetchToken();
+            return true;
         }
     }
 
@@ -21,6 +21,7 @@ const isIOSDevice = () => {
 
 const IosNotifiDialog = () => {
     const [showDialog, setShowDialog] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         if (!("Notification" in window)) {
@@ -40,6 +41,11 @@ const IosNotifiDialog = () => {
 
     const handleAllowNotifications = async () => {
         await getNotificationPermissionAndToken();
+        router.refresh();
+        setShowDialog(false);
+    };
+
+    const handleCancel = () => {
         setShowDialog(false);
     };
 
@@ -47,15 +53,23 @@ const IosNotifiDialog = () => {
         <>
             {showDialog && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-                    <div className="bg-white p-6 rounded-lg mx-3 shadow-lg max-w-sm w-full">
+                    <div className="bg-white p-6 rounded-lg mx-10 shadow-lg max-w-sm w-full">
                         <h2 className="text-lg font-bold mb-4">알림 허용</h2>
                         <p className="mb-4">이 기기에서 알림을 허용해주세요.</p>
-                        <button
-                            onClick={handleAllowNotifications}
-                            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-                        >
-                            허용하기
-                        </button>
+                        <div className="flex flex-row justify-center">
+                            <button
+                                onClick={handleAllowNotifications}
+                                className="flex-1 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mr-2"
+                            >
+                                허용하기
+                            </button>
+                            <button
+                                onClick={handleCancel}
+                                className="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600"
+                            >
+                                취소하기
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useCallback } from "react";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import styles from "./SelfStudy.module.css";
 
 const days = ["월", "화", "수", "목", "금"];

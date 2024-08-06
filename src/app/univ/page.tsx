@@ -1,9 +1,9 @@
 import React from "react";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import WithSkeletonImage from "../component/common/WithSkeletonImage";
+import WithSkeletonImage from "../components/common/WithSkeletonImage";
 
 export const metadata: Metadata = {
     title: "대학 입시 정보",

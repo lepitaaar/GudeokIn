@@ -1,6 +1,6 @@
 import React from "react";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
-import InfoPage from "@/app/component/mobile/Account/InfoPage";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
+import InfoPage from "@/app/components/mobile/Account/InfoPage";
 import { cookies } from "next/headers";
 import { verify } from "../lib/jwtUtil";
 import { getUserByUUID } from "../lib/user";

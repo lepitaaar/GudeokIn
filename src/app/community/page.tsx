@@ -1,4 +1,4 @@
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import CommunityComponent from "./CommunityComponent";
 import { cookies } from "next/headers";
 import type { Metadata } from "next";

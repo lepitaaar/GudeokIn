@@ -1,7 +1,7 @@
 "use client";
 
 import { isAxiosError } from "axios";
-import NavBarLayout from "../component/mobile/Header/NavBarLayout";
+import NavBarLayout from "../components/mobile/Header/NavBarLayout";
 import { useState, useEffect, FormEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";

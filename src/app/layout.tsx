@@ -1,17 +1,16 @@
-import type {
-    GetServerSideProps,
-    GetServerSidePropsContext,
-    Metadata,
-} from "next";
+import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import type { Viewport } from "next";
-import AddToHomeDialong from "./component/mobile/A2HSDialog";
+import AddToHomeDialong from "./components/mobile/A2HSDialog";
 import { LoadingProvider } from "./LoadingProvider";
 import { Suspense } from "react";
-import nookies from "nookies";
-import { verifyToken, verifyTokenWithString } from "@/middleware";
-import IosNotifiDialog from "./component/mobile/IosNotifiDialog";
+import IosNotifiDialog from "./components/mobile/IosNotifiDialog";
+import { AuthProvider } from "./components/Provider/AuthProvider";
+import { cookies } from "next/headers";
+import { verify } from "./lib/jwtUtil";
+import { getUserByUUID } from "./lib/user";
+// import BroadCastChannel from "./components/common/BroadCastChannel";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -180,22 +179,34 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    //after change mobile navbar, desktop
+    const cookieStore = cookies();
+    const token = cookieStore.get("accessToken");
+    var session = null;
+    if (token) {
+        const verified = verify(token.value);
+        if (verified.ok) {
+            const user = await getUserByUUID(verified.payload!.uuid);
+            session = { user: user };
+        }
+    }
+
     return (
         <html lang="ko">
             <body className={`${pretendard.variable} font-pretendard`}>
-                <Suspense>
-                    <LoadingProvider>
-                        {children}
-                        <AddToHomeDialong />
-                        <IosNotifiDialog />
-                    </LoadingProvider>
-                </Suspense>
+                <AuthProvider session={session}>
+                    <Suspense>
+                        <LoadingProvider>
+                            <AddToHomeDialong />
+                            <IosNotifiDialog />
+                            {children}
+                        </LoadingProvider>
+                    </Suspense>
+                </AuthProvider>
             </body>
         </html>
     );

@@ -34,33 +34,33 @@ export const getAuthorByPostID = async (
     return await getUserByUUID(uuid.recordset[0].uuid);
 };
 
-// export const getPostByID = async (
-//     post_id: number
-// ): Promise<Post | undefined> => {
-//     /**
-//      *
-//     post_id: number;
-//     boardType: string;
-//     board: string;
-//     title: string;
-//     content: string;
-//     date: string;
-//     author: string;
-//     uuid: string;
-//     seen: number;
-//     comment_total: number;
-//     like: number;
-//     dislike: number;
-//      */
-//     const postData = await db.query(
-//         `SELECT post_id, boardType, title, content, date, uuid, seen from everytime.community where post_id = @id`,
-//         {
-//             id: post_id,
-//         }
-//     );
+export const getPostByID = async (
+    post_id: number
+): Promise<Post | undefined> => {
+    /**
+     *
+    post_id: number;
+    boardType: string;
+    board: string;
+    title: string;
+    content: string;
+    date: string;
+    author: string;
+    uuid: string;
+    seen: number;
+    comment_total: number;
+    like: number;
+    dislike: number;
+     */
+    const postData = await db.query(
+        `SELECT post_id, boardType, title, content, date, uuid, seen from everytime.community where post_id = @id`,
+        {
+            id: post_id,
+        }
+    );
 
-//     if (postData.recordset.length === 0) {
-//         return undefined;
-//     }
-//     return postData.recordset[0] as Post;
-// };
+    if (postData.recordset.length === 0) {
+        return undefined;
+    }
+    return postData.recordset[0] as Post;
+};

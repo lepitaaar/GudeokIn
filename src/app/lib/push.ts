@@ -11,26 +11,23 @@ if (!admin.apps.length) {
 export const SendPush = async (
     token: string,
     title: string,
-    message: string
-    // link: string
+    message: string,
+    link: string
 ) => {
-    console.log("push 알림");
+    // console.log("push 알림");
     const payload: Message = {
         token,
         data: {
             title: title,
             body: message,
+            // link: link,
         },
         // webpush: {
         //     fcmOptions: {
-        //         link,
+        //         link: "https://youtube.com",
         //     },
         // },
     };
 
-    try {
-        await admin.messaging().send(payload);
-    } catch (error) {
-        console.error(error);
-    }
+    await admin.messaging().send(payload);
 };

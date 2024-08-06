@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { getToken, onMessage, Unsubscribe } from "firebase/messaging";
 import { fetchToken, messaging } from "@/app/lib/firebase";
 import { useRouter } from "next/navigation";
+import axios from "@/app/lib/axios";
 
 async function getNotificationPermissionAndToken() {
     if (!("Notification" in window)) {
@@ -76,6 +77,14 @@ const useFcmToken = () => {
 
         // Step 7: Set the fetched token and mark as fetched.
         setNotificationPermissionStatus(Notification.permission);
+
+        try {
+            await axios.post(`/api/auth/me`, {
+                fcm: token,
+            });
+        } catch (error) {
+            console.log(`Token Saved Error: ${error}`);
+        }
         setToken(token);
         isLoading.current = false;
     };
@@ -142,7 +151,7 @@ const useFcmToken = () => {
         return () => unsubscribe?.();
     }, [token, router]);
 
-    return { token, notificationPermissionStatus }; // Return the token and permission status.
+    return { token, notificationPermissionStatus, setToken }; // Return the token and permission status.
 };
 
 export default useFcmToken;

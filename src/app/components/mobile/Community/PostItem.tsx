@@ -54,7 +54,7 @@ export default function MobilePostItem({
                             )}
                         </p>
                         <p className="text-subtitleSize truncate overflow-hidden text-ellipsis whitespace-nowrap min-h-[19.5px]">
-                            {post.content.replace(/(<([^>]+)>)/gi, "")}
+                            {post.content.replace(/(<([^>]+)>)|&nbsp;/gi, "")}
                         </p>
                         <div className="flex flex-row text-[10px] space-x-1.5 overflow-hidden">
                             <p className="board">{post.board}</p>

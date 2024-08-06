@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import NavBarLayout from "./component/mobile/Header/NavBarLayout";
+import NavBarLayout from "./components/mobile/Header/NavBarLayout";
 import { verify } from "./lib/jwtUtil";
 import { Row } from "./meal/page";
 import moment from "moment";
@@ -9,17 +9,7 @@ import MobilePage from "./MobilePage";
 import { Suspense } from "react";
 
 export default async function Home() {
-    // after check Is mobile or desktop
     const token = cookies().get("accessToken")?.value;
-    var user = undefined;
-    const verified = await verify(token ?? "");
-    if (verified.ok) {
-        try {
-            user = await getUserByUUID(verified.payload?.uuid!);
-        } catch (error) {
-            console.log(error);
-        }
-    }
 
     /**급식 가져오기 */
     const data = await fetch(
@@ -78,7 +68,6 @@ export default async function Home() {
             <Suspense>
                 <NavBarLayout loginModal={false}>
                     <MobilePage
-                        user={user}
                         schedule={schedule}
                         lunch={lunch}
                         dinner={dinner}

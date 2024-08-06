@@ -3,17 +3,17 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import moment from "moment";
-import LoginModal from "./component/mobile/Header/Modal";
+import LoginModal from "./components/mobile/Header/Modal";
 import { setCookie, getCookie, deleteCookie } from "cookies-next";
 import { useRouter, useSearchParams } from "next/navigation";
-import { User } from "./export/DTO";
-import Image from "next/image";
+import axios from "@/app/lib/axios";
 import "moment/locale/ko";
-import BettingComponent from "./component/common/Betting/BettingComponent";
-import BettingAdmin from "./component/common/Betting/BettingAdmin";
-import WithSkeletonImage from "./component/common/WithSkeletonImage";
+import BettingComponent from "./components/common/Betting/BettingComponent";
+import BettingAdmin from "./components/common/Betting/BettingAdmin";
+import WithSkeletonImage from "./components/common/WithSkeletonImage";
 import useFcmToken from "@/app/hooks/useFcmToken";
 import { fetchToken } from "./lib/firebase";
+import { useAuth } from "./components/Provider/AuthProvider";
 
 function dday() {
     const today = new Date();
@@ -71,17 +71,16 @@ async function getNotificationPermissionAndToken() {
     return null;
 }
 export default function MobilePage({
-    user,
     schedule,
     lunch,
     dinner,
 }: {
-    user: User | undefined;
     schedule: any[];
     lunch: string;
     dinner: string;
 }) {
     const { token, notificationPermissionStatus } = useFcmToken();
+    const { isLoggedIn, user } = useAuth();
     const [showModal, setShowModal] = useState(false);
     const router = useRouter();
     const searchParams = useSearchParams();
@@ -97,10 +96,23 @@ export default function MobilePage({
         }
     }, []);
 
+    useEffect(() => {
+        async function getToken() {
+            if (!token) return;
+            try {
+                await axios.post(`/api/auth/me`, {
+                    fcm: token,
+                });
+            } catch (error) {
+                console.log(`Token Saved Error: ${error}`);
+            }
+        }
+        getToken();
+    }, [token]);
+
     const handleLogin = async (credentials: Credentials) => {
         //null check credentials
         let errorMessage = "";
-        var token = null;
         try {
             const response = await fetch(
                 `/api/auth/login?id=${credentials.username}&pw=${credentials.password}&fcm=${token}`,

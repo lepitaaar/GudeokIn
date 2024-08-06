@@ -6,10 +6,10 @@ import { AxiosResponse, isAxiosError } from "axios";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
 import dynamic from "next/dynamic";
-import { LoadingSpinner } from "@/app/component/common/LoadingSpinner";
+import { LoadingSpinner } from "@/app/components/common/LoadingSpinner";
 
 const PostEditor = dynamic(
-    () => import("@/app/component/mobile/Community/Editor"),
+    () => import("@/app/components/mobile/Community/Editor"),
     { ssr: false }
 );
 

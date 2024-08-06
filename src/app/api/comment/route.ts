@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { verify } from "@/app/lib/jwtUtil";
 import moment from "moment";
-import { getAuthorByPostID, getUserByUUID } from "@/app/lib/user";
+import { getAuthorByPostID, getPostByID, getUserByUUID } from "@/app/lib/user";
 import { redis } from "@/app/lib/redis";
 import { SendPush } from "@/app/lib/push";
 
@@ -169,19 +169,27 @@ export async function POST(req: NextRequest) {
     }
 
     const user = await getAuthorByPostID(body.post);
+    const post = await getPostByID(body.post);
     if (user?.uuid && user?.uuid !== payload?.uuid) {
         // 글쓴이와 댓글작성자가 같지않은경우
-        const fcm_token = await redis.hGet(`fcm`, user!.uuid);
-        if (fcm_token) {
-            SendPush(
-                fcm_token,
-                `${
-                    body.blind
-                        ? "익명"
-                        : (await getUserByUUID(payload!.uuid))!.nickname
-                }님의 댓글`,
-                body.comment
-            );
+        const fcm_token = await redis.sMembers(`fcm:${user!.uuid}`);
+        if (fcm_token.length !== 0) {
+            for (const token of fcm_token) {
+                try {
+                    SendPush(
+                        token,
+                        `${
+                            body.blind
+                                ? "익명"
+                                : (await getUserByUUID(payload!.uuid))!.nickname
+                        }님의 댓글`,
+                        body.comment.replace(/(<([^>]+)>)|&nbsp;/gi, ""),
+                        `https://gudeok.kr/board/${post?.boardType}/${post?.post_id}`
+                    );
+                } catch (error) {
+                    await redis.sRem(`fcm:${user!.uuid}`, token);
+                }
+            }
         }
     }
     if (body.parent && parentComment?.length !== 0) {
@@ -190,17 +198,25 @@ export async function POST(req: NextRequest) {
                 continue;
             /** 이중 푸시 방지 */
             if (comment.uuid === user?.uuid) continue;
-            const fcm_token = await redis.hGet(`fcm`, comment.uuid);
-            if (fcm_token) {
-                SendPush(
-                    fcm_token,
-                    `${
-                        body.blind
-                            ? "익명"
-                            : (await getUserByUUID(payload!.uuid))!.nickname
-                    }님의 댓글`,
-                    body.comment
-                );
+            const fcm_token = await redis.sMembers(`fcm:${comment.uuid}`);
+            if (fcm_token.length !== 0) {
+                for (const token of fcm_token) {
+                    try {
+                        SendPush(
+                            token,
+                            `${
+                                body.blind
+                                    ? "익명"
+                                    : (await getUserByUUID(payload!.uuid))!
+                                          .nickname
+                            }님의 댓글`,
+                            body.comment.replace(/(<([^>]+)>)|&nbsp;/gi, ""),
+                            `https://gudeok.kr/board/${post?.boardType}/${post?.post_id}`
+                        );
+                    } catch (error) {
+                        await redis.sRem(`fcm:${comment.uuid}`, token);
+                    }
+                }
             }
         }
     }
