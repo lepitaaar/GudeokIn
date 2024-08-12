@@ -21,6 +21,7 @@ interface CarouselProps {
 
 const MobileMealCarousel: React.FC<CarouselProps> = ({ items }) => {
     const dayOfweek = moment().isoWeekday();
+    //스와이퍼 다시만들어야할듯... 디바이스간 레이아웃 지원 애바임
     return (
         <div className={styles.container}>
             <div className="container text-4xl">

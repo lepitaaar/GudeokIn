@@ -69,7 +69,6 @@ export default async function WeekSchedule() {
                 process.env.NEIS_API
             }&AY=${moment().year()}&type=json&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150087&GRADE=${grade}&ALL_TI_YMD=${startOfWeek
                 .clone()
-                .subtract(17, "week")
                 .add(i, "day")
                 .format("YYYYMMDD")}`,
             {
