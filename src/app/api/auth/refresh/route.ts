@@ -72,6 +72,7 @@ export async function POST(req: NextRequest) {
     );
     const rfToken = rfTokenRes.recordset[0].rf;
     if (rfToken == undefined || rfToken != refreshToken) {
+        //after move rfToken to redis
         return NextResponse.json(
             {
                 message: "Token Mismatching",
