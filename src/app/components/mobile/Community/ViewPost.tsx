@@ -72,15 +72,16 @@ export default function MobileViewPost({
 
     const postChuchun = async (mode: "G" | "D") => {
         try {
-            await axios.post(`/api/post/vote`, {
+            const res = await axios.post(`/api/post/vote`, {
                 mode: mode,
                 post: post.post_id,
             });
-            //status check error :(
-            if (mode == "G") {
-                setGaechu((rev) => rev + 1);
-            } else {
-                setBeechu((rev) => rev + 1);
+            if (res.status === 200) {
+                if (mode == "G") {
+                    setGaechu((rev) => rev + 1);
+                } else {
+                    setBeechu((rev) => rev + 1);
+                }
             }
         } catch (error) {
             if (isAxiosError(error) && error.response) {

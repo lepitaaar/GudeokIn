@@ -6,8 +6,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/app/lib/database";
-import { JWTpayload, secret } from "@/app/export/DTO";
+import { JWTpayload } from "@/app/export/DTO";
 import jwt from "jsonwebtoken";
+import { verify } from "@/app/lib/jwtUtil";
 
 /** G: 추천
  *  D: 비추
@@ -37,7 +38,18 @@ export async function POST(req: NextRequest) {
     }
 
     const token = req.headers.get("Authorization")!.split(" ")[1];
-    const payload = jwt.verify(token, secret) as JWTpayload;
+    const verified = verify(token);
+    if (!verified.ok) {
+        return NextResponse.json(
+            {
+                message: "로그인이 필요합니다",
+            },
+            {
+                status: 403,
+            }
+        );
+    }
+    const payload = verified.payload!;
     const param = validation.data;
 
     const exist_query = `SELECT uuid FROM everytime.chu where post_id = @post and uuid = @uuid`;
