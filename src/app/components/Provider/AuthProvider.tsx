@@ -1,7 +1,6 @@
 "use client";
 
 import { User } from "@/app/export/DTO";
-import { fetchToken } from "@/app/lib/firebase";
 import React, { createContext, useContext, useEffect } from "react";
 import axios from "@/app/lib/axios";
 import useFcmToken from "@/app/hooks/useFcmToken";

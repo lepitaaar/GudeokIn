@@ -24,7 +24,7 @@ export default async function ViewPost({
     );
 
     if (response.recordset.length <= 0) {
-        redirect("/");
+        redirect("/?alert=존재하지 않는 글입니다");
     }
 
     const post: Post = response.recordset[0];
@@ -54,7 +54,7 @@ export default async function ViewPost({
             permission?.admin > 0 &&
             permission?.admin !== Number((current_user?.role ?? 0) >= 1)
         ) {
-            redirect("/");
+            redirect("/?alert=권한이 존재하지 않습니다");
         }
     }
 

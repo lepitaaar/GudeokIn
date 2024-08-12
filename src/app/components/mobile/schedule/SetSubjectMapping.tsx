@@ -25,6 +25,7 @@ export default function SetSubectMappingView({
             }
         } catch (error) {
             console.log(error);
+            alert("예상치 못한 오류가 발생했습니다");
         }
     };
 

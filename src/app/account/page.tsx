@@ -17,16 +17,16 @@ export default async function Account() {
         const valid = verify(cookieStore.get("accessToken")!.value);
 
         if (!valid.ok) {
-            return redirect("/");
+            return redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
         }
         user = await getUserByUUID(valid.payload!.uuid);
     } catch (error) {
         console.log(error);
-        return redirect("/");
+        return redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
     }
 
     if (!user) {
-        return redirect("/");
+        return redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
     }
 
     return (

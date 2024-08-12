@@ -6,8 +6,10 @@ import { verify } from "../lib/jwtUtil";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { db } from "../lib/database";
-
 import type { Metadata } from "next";
+import { useAuth } from "../components/Provider/AuthProvider";
+import { redirect } from "next/navigation";
+import { getUserSession } from "../lib/user";
 
 export const metadata: Metadata = {
     title: "시간표",
@@ -49,16 +51,15 @@ interface TimetableData {
 }
 
 export default async function WeekSchedule() {
-    const token = cookies().get("accessToken")!.value;
-    const verified = await verify(token);
+    const { isLoggedIn, user } = await getUserSession();
 
-    if (!verified.ok) {
-        return NextResponse.redirect(new URL("/"));
+    if (!isLoggedIn) {
+        redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
     }
 
     const startOfWeek = moment().startOf("isoWeek");
-    const grade = verified.payload!.grade;
-    const classNM = verified.payload!.class;
+    const grade = user!.grade;
+    const classNM = user!.class;
     var subject = [];
     var setSubject = new Map<string, Set<string>>();
 
@@ -68,6 +69,7 @@ export default async function WeekSchedule() {
                 process.env.NEIS_API
             }&AY=${moment().year()}&type=json&ATPT_OFCDC_SC_CODE=C10&SD_SCHUL_CODE=7150087&GRADE=${grade}&ALL_TI_YMD=${startOfWeek
                 .clone()
+                .subtract(17, "week")
                 .add(i, "day")
                 .format("YYYYMMDD")}`,
             {
@@ -102,7 +104,6 @@ export default async function WeekSchedule() {
                 }
             }
         });
-
         parsed.sort((a, b) => a.PERIO - b.PERIO);
         subject.push(
             parsed.map((data) => {
@@ -112,15 +113,17 @@ export default async function WeekSchedule() {
                 return data.CLRM_NM.split("/")[0];
             })
         );
+        setSubject = new Map<string, Set<string>>(
+            Array.from(setSubject).sort()
+        );
     }
 
-    const valid = verify(cookies().get("accessToken")!.value);
     const map = JSON.parse(
         (
             await db.query(
                 `SELECT map FROM everytime.schedule WHERE uuid = @uuid`,
                 {
-                    uuid: valid.payload?.uuid,
+                    uuid: user!.uuid,
                 }
             )
         ).recordset[0]?.map ?? "{}"

@@ -10,7 +10,6 @@ import { AuthProvider } from "./components/Provider/AuthProvider";
 import { cookies } from "next/headers";
 import { verify } from "./lib/jwtUtil";
 import { getUserByUUID } from "./lib/user";
-// import BroadCastChannel from "./components/common/BroadCastChannel";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",

@@ -1,5 +1,7 @@
+import { cookies } from "next/headers";
 import { Post, User } from "../export/DTO";
 import { db } from "./database";
+import { verify } from "./jwtUtil";
 
 export const getUserByUUID = async (
     uuid: string
@@ -63,4 +65,22 @@ export const getPostByID = async (
         return undefined;
     }
     return postData.recordset[0] as Post;
+};
+
+export const getUserSession = async () => {
+    const cookieStore = cookies();
+    const token = cookieStore.get("accessToken")?.value ?? "";
+    const verified = await verify(token);
+
+    if (!verified.ok) {
+        return {
+            isLoggedIn: false,
+            user: null,
+        };
+    }
+    const user = await getUserByUUID(verified.payload!.uuid);
+    return {
+        isLoggedIn: true,
+        user: user,
+    };
 };
