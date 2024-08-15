@@ -52,7 +52,7 @@ const IosNotifiDialog = () => {
     return (
         <>
             {showDialog && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-30">
                     <div className="bg-white p-6 rounded-lg mx-10 shadow-lg max-w-sm w-full">
                         <h2 className="text-lg font-bold mb-4">알림 허용</h2>
                         <p className="mb-4">이 기기에서 알림을 허용해주세요.</p>
