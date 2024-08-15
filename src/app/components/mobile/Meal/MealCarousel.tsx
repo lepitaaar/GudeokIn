@@ -10,7 +10,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import "./carousel.css";
-import styles from "./MealCarousel.module.css";
 import moment from "moment";
 
 import { EffectCoverflow, Navigation } from "swiper/modules";
