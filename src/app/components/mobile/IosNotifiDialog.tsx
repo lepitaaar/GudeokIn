@@ -34,7 +34,11 @@ const IosNotifiDialog = () => {
             return;
         }
 
-        if (isIOSDevice()) {
+        // Check if the dialog has been dismissed previously
+        if (
+            isIOSDevice() &&
+            !localStorage.getItem("iosNotificationDialogDismissed")
+        ) {
             setShowDialog(true);
         }
     }, []);
@@ -46,6 +50,7 @@ const IosNotifiDialog = () => {
     };
 
     const handleCancel = () => {
+        localStorage.setItem("iosNotificationDialogDismissed", "true");
         setShowDialog(false);
     };
 

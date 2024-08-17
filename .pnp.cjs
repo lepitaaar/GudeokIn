@@ -50,12 +50,15 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["@types/react-modal", "npm:3.16.3"],\
+          ["@types/tough-cookie", "npm:4.0.5"],\
+          ["@types/xml2js", "npm:0.4.14"],\
           ["@typescript-eslint/eslint-plugin", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:7.16.1"],\
           ["@typescript-eslint/parser", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:7.16.1"],\
           ["@yarnpkg/sdks", "npm:3.1.3"],\
           ["@zxing/library", "npm:0.21.1"],\
           ["aws-sdk", "npm:2.1655.0"],\
           ["axios", "npm:1.7.2"],\
+          ["axios-cookiejar-support", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.2"],\
           ["babel-loader", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:9.1.3"],\
           ["babel-plugin-styled-components", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:2.1.4"],\
           ["babel-runtime", "npm:6.26.0"],\
@@ -102,9 +105,11 @@ const RAW_RUNTIME_STATE =
           ["swiper", "npm:11.1.4"],\
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
+          ["tough-cookie", "npm:4.1.4"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
           ["webpack", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.93.0"],\
           ["webpack-cli", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.1.4"],\
+          ["xml2js", "npm:0.6.2"],\
           ["zod", "npm:3.23.8"]\
         ],\
         "linkType": "SOFT"\
@@ -7676,6 +7681,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["@types/xml2js", [\
+      ["npm:0.4.14", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/@types-xml2js-npm-0.4.14-595cc9c3cf-10c0.zip/node_modules/@types/xml2js/",\
+        "packageDependencies": [\
+          ["@types/xml2js", "npm:0.4.14"],\
+          ["@types/node", "npm:20.14.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["@typescript-eslint/eslint-plugin", [\
       ["npm:7.16.1", {\
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/@typescript-eslint-eslint-plugin-npm-7.16.1-92bcf2926d-10c0.zip/node_modules/@typescript-eslint/eslint-plugin/",\
@@ -8958,6 +8973,33 @@ const RAW_RUNTIME_STATE =
           ["follow-redirects", "virtual:c89264f6f79513b22a07db5e53adf77eba9e48634cf471fb55eb2e75d910809bbac48d9ce7a920c63c8ff2780624fff91866270d8acf614cbd0c4cb748a8b29a#npm:1.15.6"],\
           ["form-data", "npm:4.0.0"],\
           ["proxy-from-env", "npm:1.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["axios-cookiejar-support", [\
+      ["npm:5.0.2", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/axios-cookiejar-support-npm-5.0.2-2af790194a-10c0.zip/node_modules/axios-cookiejar-support/",\
+        "packageDependencies": [\
+          ["axios-cookiejar-support", "npm:5.0.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.2", {\
+        "packageLocation": "./.yarn/__virtual__/axios-cookiejar-support-virtual-c5eb9c76e8/3/C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/axios-cookiejar-support-npm-5.0.2-2af790194a-10c0.zip/node_modules/axios-cookiejar-support/",\
+        "packageDependencies": [\
+          ["axios-cookiejar-support", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.2"],\
+          ["@types/axios", null],\
+          ["@types/tough-cookie", "npm:4.0.5"],\
+          ["axios", "npm:1.7.2"],\
+          ["http-cookie-agent", "virtual:c5eb9c76e84f2215f052b9c27711cd23d5d59164aea11ee3b76c04f6a3c6d1006c9c92c2401a94ef315e32feba2f83787af3b210abf50de4c1878bc0721f715e#npm:6.0.5"],\
+          ["tough-cookie", "npm:4.1.4"]\
+        ],\
+        "packagePeers": [\
+          "@types/axios",\
+          "@types/tough-cookie",\
+          "axios",\
+          "tough-cookie"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -12215,12 +12257,15 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.3.3"],\
           ["@types/react-dom", "npm:18.3.0"],\
           ["@types/react-modal", "npm:3.16.3"],\
+          ["@types/tough-cookie", "npm:4.0.5"],\
+          ["@types/xml2js", "npm:0.4.14"],\
           ["@typescript-eslint/eslint-plugin", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:7.16.1"],\
           ["@typescript-eslint/parser", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:7.16.1"],\
           ["@yarnpkg/sdks", "npm:3.1.3"],\
           ["@zxing/library", "npm:0.21.1"],\
           ["aws-sdk", "npm:2.1655.0"],\
           ["axios", "npm:1.7.2"],\
+          ["axios-cookiejar-support", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.0.2"],\
           ["babel-loader", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:9.1.3"],\
           ["babel-plugin-styled-components", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:2.1.4"],\
           ["babel-runtime", "npm:6.26.0"],\
@@ -12267,9 +12312,11 @@ const RAW_RUNTIME_STATE =
           ["swiper", "npm:11.1.4"],\
           ["tailwind-scrollbar-hide", "npm:1.1.7"],\
           ["tailwindcss", "npm:3.4.3"],\
+          ["tough-cookie", "npm:4.1.4"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
           ["webpack", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.93.0"],\
           ["webpack-cli", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.1.4"],\
+          ["xml2js", "npm:0.6.2"],\
           ["zod", "npm:3.23.8"]\
         ],\
         "linkType": "SOFT"\
@@ -12400,6 +12447,33 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/http-cache-semantics-npm-4.1.1-1120131375-10c0.zip/node_modules/http-cache-semantics/",\
         "packageDependencies": [\
           ["http-cache-semantics", "npm:4.1.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["http-cookie-agent", [\
+      ["npm:6.0.5", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/http-cookie-agent-npm-6.0.5-b92d7b7946-10c0.zip/node_modules/http-cookie-agent/",\
+        "packageDependencies": [\
+          ["http-cookie-agent", "npm:6.0.5"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:c5eb9c76e84f2215f052b9c27711cd23d5d59164aea11ee3b76c04f6a3c6d1006c9c92c2401a94ef315e32feba2f83787af3b210abf50de4c1878bc0721f715e#npm:6.0.5", {\
+        "packageLocation": "./.yarn/__virtual__/http-cookie-agent-virtual-0d358eb10a/3/C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/http-cookie-agent-npm-6.0.5-b92d7b7946-10c0.zip/node_modules/http-cookie-agent/",\
+        "packageDependencies": [\
+          ["http-cookie-agent", "virtual:c5eb9c76e84f2215f052b9c27711cd23d5d59164aea11ee3b76c04f6a3c6d1006c9c92c2401a94ef315e32feba2f83787af3b210abf50de4c1878bc0721f715e#npm:6.0.5"],\
+          ["@types/tough-cookie", "npm:4.0.5"],\
+          ["@types/undici", null],\
+          ["agent-base", "npm:7.1.1"],\
+          ["tough-cookie", "npm:4.1.4"],\
+          ["undici", null]\
+        ],\
+        "packagePeers": [\
+          "@types/tough-cookie",\
+          "@types/undici",\
+          "tough-cookie",\
+          "undici"\
         ],\
         "linkType": "HARD"\
       }]\
