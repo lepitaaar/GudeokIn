@@ -6,6 +6,7 @@ import { z } from "zod";
 import { parseStringPromise } from "xml2js";
 import { db } from "@/app/lib/database";
 import { verify } from "@/app/lib/jwtUtil";
+import moment from "moment";
 
 const schema = z.object({
     username: z.string().min(1),
@@ -181,17 +182,19 @@ export async function POST(req: NextRequest) {
             explicitArray: true,
         });
 
-        var errorCode: string | undefined;
+        var loginYN: string | undefined;
         var errorMsg: string | undefined;
-        (loginRes.Root.Parameters[0].Parameter as any[]).forEach((item) => {
-            if (item.$.id == "ErrorCode") {
-                errorCode = item._;
+        (loginRes.Root.Dataset[0].Rows[0].Row[0].Col as any[]).forEach(
+            (item) => {
+                if (item.$.id == "loginYN") {
+                    loginYN = item._;
+                }
+                if (item.$.id === "message") {
+                    errorMsg = item._;
+                }
             }
-            if (item.$.id === "ErrorMsg") {
-                errorMsg = item._;
-            }
-        });
-        if (errorCode !== "0") {
+        );
+        if (loginYN === "N") {
             return NextResponse.json(
                 {
                     message: errorMsg,
@@ -288,6 +291,39 @@ export async function POST(req: NextRequest) {
             }
         }
 
+        /** 위에 GET만들어두고 귀찮아서 복붙함 */
+        const exam = await db.query(
+            `
+            SELECT sbjtNm,
+                MIN(screClaNm) AS screClaNm,
+                MIN([hours]) AS hours
+            FROM everytime.st_score
+            WHERE screClaNm IS NOT NULL and uuid = @uuid
+            GROUP BY grade, sem, sbjtNm
+            ORDER BY grade, sem, sbjtNm;`,
+            {
+                uuid: valid_tk.payload!.uuid,
+            }
+        );
+
+        var total_환산 = 0;
+        var total_단위수 = 0;
+
+        for (var subject of exam.recordset) {
+            if (subject.screClaNm === "P") continue;
+            total_환산 += parseInt(subject.screClaNm) * subject.hours;
+            total_단위수 += subject.hours;
+        }
+        const credit = Number(total_환산 / total_단위수).toFixed(2);
+        await db.query(
+            `UPDATE everytime.user_info SET isNeisSync = 1, neisSyncDate = @date, credit = @credit where uuid = @uuid`,
+            {
+                date: moment().format("YYYY-MM-DD"),
+                credit: credit,
+                uuid: valid_tk.payload!.uuid,
+            }
+        );
+
         return NextResponse.json(
             {
                 message: "success",
@@ -297,11 +333,8 @@ export async function POST(req: NextRequest) {
             }
         );
     } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.log(error);
-        } else {
-            console.error("Error occurred:", (error as Error).message);
-        }
+        console.error("Error occurred:", (error as Error).message);
+
         return NextResponse.json(
             {
                 message: "Internal Server Error",

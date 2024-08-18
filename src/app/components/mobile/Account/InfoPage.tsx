@@ -9,9 +9,13 @@ import NeisSync from "./NeisSync";
 
 export default function InfoPage({ user }: { user: User }) {
     const profileImgRef = useRef<any>();
+    const [isBlurred, setIsBlurred] = useState(true);
     const [nickname, setNickname] = useState(user.nickname);
     const [imgSrc, setImageSrc] = useState(user.profileImage);
     const [profileImg, setProfileImg] = useState<Blob | undefined>(undefined);
+    const handleToggleBlur = () => {
+        setIsBlurred(!isBlurred);
+    };
     const router = useRouter();
 
     const ChangeProfileImage = async () => {
@@ -89,6 +93,18 @@ export default function InfoPage({ user }: { user: User }) {
                     <p>
                         {user.grade}학년 {user.class}반 {user.number}번
                     </p>
+                    {user.credit && (
+                        <p>
+                            등급 :{" "}
+                            <span
+                                className="cursor-pointer"
+                                style={isBlurred ? { filter: "blur(4px)" } : {}}
+                                onClick={handleToggleBlur}
+                            >
+                                {user.credit}
+                            </span>
+                        </p>
+                    )}
                 </div>
                 <div className="space-y-3">
                     <div className="flex flex-col gap-6 w-full mt-4">
@@ -109,11 +125,16 @@ export default function InfoPage({ user }: { user: User }) {
                             </label>
                         </div>
                     </div>
-                    <NeisSync />
+                    <div>
+                        <NeisSync />
+                        <p className="text-xs text-gray-600 mt-1">
+                            나이스 성적 계산은 학기말 기준으로 제공됩니다
+                        </p>
+                    </div>
                     <div className="flex justify-center items-center">
                         <button
                             type="submit"
-                            className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold"
+                            className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold rounded-[0.2rem]"
                         >
                             저장
                         </button>

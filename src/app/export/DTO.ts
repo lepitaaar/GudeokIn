@@ -10,8 +10,9 @@ export interface User {
     role: number;
     profileImage: string;
     nickchangeDate?: string;
-    credit: number;
     isNeisSync: boolean;
+    neisSyncDate: string;
+    credit: number;
 }
 
 export interface Chuchun {
