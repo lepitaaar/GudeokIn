@@ -7,7 +7,7 @@ export const getUserByUUID = async (
     uuid: string
 ): Promise<User | undefined> => {
     const userData = await db.query(
-        `SELECT uuid, grade, class, number, role, profileImage, nickname, email,nickchangeDate from everytime.user_info where uuid = @uuid`,
+        `SELECT uuid, grade, class, number, role, profileImage, nickname, email, nickchangeDate, credit, isNeisSync from everytime.user_info where uuid = @uuid`,
         {
             uuid: uuid,
         }

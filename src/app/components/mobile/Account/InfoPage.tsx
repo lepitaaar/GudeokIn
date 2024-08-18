@@ -5,6 +5,7 @@ import axios from "@/app/lib/axios";
 import { useRouter } from "next/navigation";
 import { AxiosResponse, isAxiosError } from "axios";
 import React, { useRef, useState } from "react";
+import NeisSync from "./NeisSync";
 
 export default function InfoPage({ user }: { user: User }) {
     const profileImgRef = useRef<any>();
@@ -89,31 +90,34 @@ export default function InfoPage({ user }: { user: User }) {
                         {user.grade}학년 {user.class}반 {user.number}번
                     </p>
                 </div>
-                <div className="flex flex-col gap-6 w-full mt-4">
-                    <div className="relative h-11 w-full min-w-[200px]">
-                        <input
-                            placeholder="닉네임"
-                            id="nickname"
-                            value={nickname}
-                            onChange={(e) => setNickname(e.target.value)}
-                            className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                            maxLength={20}
-                        />
-                        <label
-                            className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
-                            htmlFor="nickname"
-                        >
-                            닉네임
-                        </label>
+                <div className="space-y-3">
+                    <div className="flex flex-col gap-6 w-full mt-4">
+                        <div className="relative h-11 w-full min-w-[200px]">
+                            <input
+                                placeholder="닉네임"
+                                id="nickname"
+                                value={nickname}
+                                onChange={(e) => setNickname(e.target.value)}
+                                className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                maxLength={20}
+                            />
+                            <label
+                                className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
+                                htmlFor="nickname"
+                            >
+                                닉네임
+                            </label>
+                        </div>
                     </div>
-                </div>
-                <div className="flex justify-center items-center mt-3">
-                    <button
-                        type="submit"
-                        className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold"
-                    >
-                        저장
-                    </button>
+                    <NeisSync />
+                    <div className="flex justify-center items-center">
+                        <button
+                            type="submit"
+                            className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold"
+                        >
+                            저장
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>
