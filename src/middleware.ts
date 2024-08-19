@@ -90,7 +90,10 @@ export default async function middleware(req: NextRequest) {
         )
     ) {
         const redirect = NextResponse.redirect(
-            new URL("/?alert=로그인 후 이용가능한 서비스 입니다", req.url)
+            new URL(
+                encodeURI("/?alert=로그인 후 이용가능한 서비스 입니다"),
+                req.url
+            )
         );
         return redirect;
     }

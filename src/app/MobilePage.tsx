@@ -335,12 +335,14 @@ export default function MobilePage({
                         확인하기 👉
                     </p>
                 </div> */}
-                <div>
-                    <NeisSync />
-                    <p className="text-xs text-gray-600 mt-1">
-                        나이스 성적 계산은 학기말 기준으로 제공됩니다
-                    </p>
-                </div>
+                {isLoggedIn && (
+                    <div>
+                        <NeisSync />
+                        <p className="text-xs text-gray-600 mt-1">
+                            나이스 성적 계산은 학기말 기준으로 제공됩니다
+                        </p>
+                    </div>
+                )}
                 <div className="Sooneung-Counter border border-solid border-1 p-3 shadow-sm rounded-lg">
                     <p className="text-xl font-bold">
                         대학수학능력시험{" "}

@@ -12,7 +12,7 @@ export default async function Account() {
     const { isLoggedIn, user } = await getUserSession();
 
     if (!isLoggedIn) {
-        redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
+        redirect(encodeURI("/?alert=로그인 후 이용가능한 서비스 입니다"));
     }
 
     return (

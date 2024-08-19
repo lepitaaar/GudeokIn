@@ -8,7 +8,7 @@ import { NextResponse } from "next/server";
 import { db } from "../lib/database";
 import type { Metadata } from "next";
 import { useAuth } from "../components/Provider/AuthProvider";
-import { redirect } from "next/navigation";
+import { RedirectType, redirect } from "next/navigation";
 import { getUserSession } from "../lib/user";
 
 export const metadata: Metadata = {
@@ -54,7 +54,7 @@ export default async function WeekSchedule() {
     const { isLoggedIn, user } = await getUserSession();
 
     if (!isLoggedIn) {
-        redirect("/?alert=로그인 후 이용가능한 서비스 입니다");
+        redirect(encodeURI("/?alert=로그인 후 이용가능한 서비스 입니다"));
     }
 
     const startOfWeek = moment().startOf("isoWeek");

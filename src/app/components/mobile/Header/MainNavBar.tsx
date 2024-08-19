@@ -222,11 +222,9 @@ export default function MobileMainNavBar({
                             <li className="p-4 border-b">시간표</li>
                         </Link>
                     )}
-                    {isLoggedIn && (
-                        <Link href={"/diary"} onClick={toggleMenu}>
-                            <li className="p-4 border-b">일정 관리</li>
-                        </Link>
-                    )}
+                    <Link href={"/diary"} onClick={toggleMenu}>
+                        <li className="p-4 border-b">일정 관리</li>
+                    </Link>
                     {/* ~ */}
                     {/* <Link href={"/stcard"} onClick={toggleMenu}>
                         <li className="p-4 border-b">학생증</li>
