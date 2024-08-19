@@ -170,8 +170,8 @@ export async function POST(req: NextRequest) {
 
     const user = await getAuthorByPostID(body.post);
     const post = await getPostByID(body.post);
+    // 글쓴이와 댓글작성자가 같지않은경우
     if (user?.uuid && user?.uuid !== payload?.uuid) {
-        // 글쓴이와 댓글작성자가 같지않은경우
         const fcm_token = await redis.sMembers(`fcm:${user!.uuid}`);
         if (fcm_token.length !== 0) {
             for (const token of fcm_token) {
@@ -190,10 +190,12 @@ export async function POST(req: NextRequest) {
     }
     if (body.parent && parentComment?.length !== 0) {
         for (const comment of parentComment!) {
+            /** 이중 푸시 방지 */
             if (comment.uuid === undefined || comment.uuid === payload?.uuid)
                 continue;
-            /** 이중 푸시 방지 */
+            /** 글쓴이 하고 댓글이 같은경우도 핸들 */
             if (comment.uuid === user?.uuid) continue;
+
             const fcm_token = await redis.sMembers(`fcm:${comment.uuid}`);
             if (fcm_token.length !== 0) {
                 for (const token of fcm_token) {
