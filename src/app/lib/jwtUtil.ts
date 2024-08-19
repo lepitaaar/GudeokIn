@@ -17,7 +17,7 @@ const payload = (user: User) => {
 const sign = (user: User) => {
     return jwt.sign(payload(user), secret, {
         algorithm: "HS256", // 암호화 알고리즘
-        expiresIn: "1d", // 유효기간
+        expiresIn: "10000", // 유효기간
     });
 };
 

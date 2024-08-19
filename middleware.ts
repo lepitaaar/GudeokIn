@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { jwtVerify, SignJWT, errors, jwtDecrypt, decodeJwt } from "jose";
-import { JWTpayload } from "./app/export/DTO";
+import { JWTpayload } from "./src/app/export/DTO";
 import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 const secret = process.env.RSA_PRIVATE_KEY!;
@@ -133,6 +133,7 @@ export default async function middleware(req: NextRequest) {
         }
 
         try {
+            const redirect = NextResponse.redirect(req.url);
             const response = await fetch(
                 `${process.env.NEXT_PUBLIC_API_HOST}/api/auth/refresh`,
                 {
@@ -145,16 +146,16 @@ export default async function middleware(req: NextRequest) {
                     }),
                 }
             ).then((res) => res.json());
-            console.log(response);
-            res.cookies.set("accessToken", response.accessToken, {
+            console.log("Token Refresh!");
+            redirect.cookies.set("accessToken", response.accessToken, {
                 path: "/",
                 maxAge: 60 * 60 * 24 * 14,
             });
-            res.cookies.set("refreshToken", response.refreshToken, {
+            redirect.cookies.set("refreshToken", response.refreshToken, {
                 path: "/",
                 maxAge: 60 * 60 * 24 * 14,
             });
-            return res;
+            return redirect;
         } catch (error: any) {
             const redirect = NextResponse.redirect(new URL("/", req.url));
             console.log("Middleware token refresh Error: ", error.message);
@@ -211,5 +212,5 @@ export default async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/((?!_next/static|healthy|_next/image|favicon.ico).*)"],
+    matcher: ["/((?!healthy|_next/static|_next/image|favicon.ico).*)"],
 };

@@ -11,6 +11,7 @@ import {
     sign,
     refresh,
 } from "@/app/lib/jwtUtil";
+import { redis } from "@/app/lib/redis";
 import { getUserByUUID } from "@/app/lib/user";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
@@ -64,15 +65,9 @@ export async function POST(req: NextRequest) {
         );
     }
 
-    const rfTokenRes = await db.query(
-        `SELECT refreshToken as rf FROM everytime.users WHERE uuid = @user_uuid`,
-        {
-            user_uuid: decode_payload.payload?.uuid,
-        }
-    );
-    const rfToken = rfTokenRes.recordset[0].rf;
-    if (rfToken == undefined || rfToken != refreshToken) {
-        //after move rfToken to redis
+    const rfExist = await redis.GET(`token:${token}`);
+    console.log(rfExist);
+    if (!rfExist || rfExist != refreshToken) {
         return NextResponse.json(
             {
                 message: "Token Mismatching",
@@ -82,18 +77,37 @@ export async function POST(req: NextRequest) {
             }
         );
     }
+    // const rfTokenRes = await db.query(
+    //     `SELECT refreshToken as rf FROM everytime.users WHERE uuid = @user_uuid`,
+    //     {
+    //         user_uuid: decode_payload.payload?.uuid,
+    //     }
+    // );
+    // const rfToken = rfTokenRes.recordset[0].rf;
+    // if (rfToken == undefined || rfToken != refreshToken) {
+    //     //after move rfToken to redis
+    //     return NextResponse.json(
+    //         {
+    //             message: "Token Mismatching",
+    //         },
+    //         {
+    //             status: 500,
+    //         }
+    //     );
+    // }
 
     const validToken = refreshVerify(refreshToken);
     if (!validToken.ok) {
-        await db.query(
-            `UPDATE everytime.users SET refreshToken = NULL where uuid = @user_uuid`,
-            {
-                user_uuid: decode_payload.payload?.uuid,
-            }
-        );
+        // await db.query(
+        //     `UPDATE everytime.users SET refreshToken = NULL where uuid = @user_uuid`,
+        //     {
+        //         user_uuid: decode_payload.payload?.uuid,
+        //     }
+        // );
+        await redis.DEL(`token:${token}`);
         return NextResponse.json(
             {
-                message: "jwt expired",
+                message: "refreshToken expired",
             },
             {
                 status: 401,
@@ -119,13 +133,17 @@ export async function POST(req: NextRequest) {
     const r_acToken = sign(user);
     const r_rfToken = refresh();
 
-    await db.query(
-        `UPDATE everytime.users SET refreshToken = @rf WHERE uuid = @user_uuid`,
-        {
-            rf: r_rfToken,
-            user_uuid: decode_payload.payload!.uuid,
-        }
-    );
+    await redis.SET(`token:${r_acToken}`, r_rfToken, {
+        EX: 1209600,
+    });
+
+    // await db.query(
+    //     `UPDATE everytime.users SET refreshToken = @rf WHERE uuid = @user_uuid`,
+    //     {
+    //         rf: r_rfToken,
+    //         user_uuid: decode_payload.payload!.uuid,
+    //     }
+    // );
 
     return NextResponse.json(
         {

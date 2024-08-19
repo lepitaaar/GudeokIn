@@ -76,7 +76,6 @@ export async function POST(request: NextRequest) {
 
         const user = existUser.recordset[0];
 
-        const refreshToken = user.refreshToken ?? refresh();
         const user_data = await getUserByUUID(user.uuid);
         if (!user_data) {
             // Login failed
@@ -91,16 +90,18 @@ export async function POST(request: NextRequest) {
         }
 
         const accessToken = sign(user_data);
+        const refreshToken = refresh();
 
-        if (user.refreshToken == undefined) {
-            await db.query(
-                `update everytime.users set refreshToken = @token where uuid = @uuid`,
-                {
-                    token: refreshToken,
-                    uuid: user.uuid,
-                }
-            );
-        }
+        await redis.SET(`token:${accessToken}`, refreshToken);
+        // if (user.refreshToken == undefined) {
+        //     await db.query(
+        //         `update everytime.users set refreshToken = @token where uuid = @uuid`,
+        //         {
+        //             token: refreshToken,
+        //             uuid: user.uuid,
+        //         }
+        //     );
+        // }
 
         if (fcm) {
             await redis.sAdd(`fcm:${user.uuid}`, fcm);
