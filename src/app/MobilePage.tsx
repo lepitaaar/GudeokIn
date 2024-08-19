@@ -99,9 +99,9 @@ export default function MobilePage({
             router.push("/");
         }
         if (redirectLocation) {
+            setRedirectLocation(null);
             router.replace("/");
             router.push(redirectLocation);
-            setRedirectLocation(null);
         }
     }, []);
 
