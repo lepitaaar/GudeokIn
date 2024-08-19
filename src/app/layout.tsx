@@ -10,6 +10,7 @@ import { AuthProvider } from "./components/Provider/AuthProvider";
 import { cookies } from "next/headers";
 import { verify } from "./lib/jwtUtil";
 import { getUserByUUID } from "./lib/user";
+import NextTopLoader from "nextjs-toploader";
 
 const pretendard = localFont({
     src: "../fonts/PretendardVariable.woff2",
@@ -198,13 +199,12 @@ export default async function RootLayout({
         <html lang="ko">
             <body className={`${pretendard.variable} font-pretendard`}>
                 <AuthProvider session={session}>
-                    <Suspense>
-                        <LoadingProvider>
-                            <AddToHomeDialong />
-                            <IosNotifiDialog />
-                            {children}
-                        </LoadingProvider>
-                    </Suspense>
+                    <NextTopLoader color="#2854C5" showSpinner={false} />
+                    <AddToHomeDialong />
+                    <IosNotifiDialog />
+                    {children}
+                    {/* <LoadingProvider>
+                        </LoadingProvider> */}
                 </AuthProvider>
             </body>
         </html>

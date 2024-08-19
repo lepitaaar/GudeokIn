@@ -82,6 +82,7 @@ const RAW_RUNTIME_STATE =
           ["mssql-async", "npm:3.0.1"],\
           ["next", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:14.2.5"],\
           ["next-pwa", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.6.0"],\
+          ["nextjs-toploader", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.6.12"],\
           ["node-gyp", "npm:10.2.0"],\
           ["nodemailer", "npm:6.9.14"],\
           ["nookies", "npm:2.5.2"],\
@@ -12289,6 +12290,7 @@ const RAW_RUNTIME_STATE =
           ["mssql-async", "npm:3.0.1"],\
           ["next", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:14.2.5"],\
           ["next-pwa", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:5.6.0"],\
+          ["nextjs-toploader", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.6.12"],\
           ["node-gyp", "npm:10.2.0"],\
           ["nodemailer", "npm:6.9.14"],\
           ["nookies", "npm:2.5.2"],\
@@ -14391,6 +14393,38 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["nextjs-toploader", [\
+      ["npm:1.6.12", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/nextjs-toploader-npm-1.6.12-79e711858e-10c0.zip/node_modules/nextjs-toploader/",\
+        "packageDependencies": [\
+          ["nextjs-toploader", "npm:1.6.12"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.6.12", {\
+        "packageLocation": "./.yarn/__virtual__/nextjs-toploader-virtual-d4d828ad75/3/C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/nextjs-toploader-npm-1.6.12-79e711858e-10c0.zip/node_modules/nextjs-toploader/",\
+        "packageDependencies": [\
+          ["nextjs-toploader", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:1.6.12"],\
+          ["@types/next", null],\
+          ["@types/react", "npm:18.3.3"],\
+          ["@types/react-dom", "npm:18.3.0"],\
+          ["next", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:14.2.5"],\
+          ["nprogress", "npm:0.2.0"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.3.1"],\
+          ["react-dom", "virtual:f4018ffa55634aeb2cd14f2d6048181a1baacd140d69d974bf691bf583748ad5d83936ea2e5f1382568d10618f36f21580ddfd6e5246bd36edce7f03f3cfa89a#npm:18.3.1"]\
+        ],\
+        "packagePeers": [\
+          "@types/next",\
+          "@types/react-dom",\
+          "@types/react",\
+          "next",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["node-abort-controller", [\
       ["npm:3.1.1", {\
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/node-abort-controller-npm-3.1.1-e246ed42cd-10c0.zip/node_modules/node-abort-controller/",\
@@ -14504,6 +14538,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/normalize-url-npm-6.1.0-b95bc12ece-10c0.zip/node_modules/normalize-url/",\
         "packageDependencies": [\
           ["normalize-url", "npm:6.1.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["nprogress", [\
+      ["npm:0.2.0", {\
+        "packageLocation": "../../C:/Users/LockPick/AppData/Local/Yarn/Berry/cache/nprogress-npm-0.2.0-c1c0973624-10c0.zip/node_modules/nprogress/",\
+        "packageDependencies": [\
+          ["nprogress", "npm:0.2.0"]\
         ],\
         "linkType": "HARD"\
       }]\
