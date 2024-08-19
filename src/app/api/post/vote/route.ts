@@ -6,8 +6,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/app/lib/database";
-import { JWTpayload } from "@/app/export/DTO";
-import jwt from "jsonwebtoken";
 import { verify } from "@/app/lib/jwtUtil";
 
 /** G: 추천

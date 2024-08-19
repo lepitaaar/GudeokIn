@@ -208,18 +208,25 @@ export default function MobileMainNavBar({
                     </svg>
                 </div>
                 <ul>
+                    <Link href={"/"} onClick={toggleMenu}>
+                        <li className="p-4 border-b">홈</li>
+                    </Link>
                     <Link href={"/community?board=all"} onClick={toggleMenu}>
                         <li className="p-4 border-b">커뮤니티</li>
                     </Link>
                     <Link href={"/meal"} onClick={toggleMenu}>
                         <li className="p-4 border-b">급식</li>
                     </Link>
-                    <Link href={"/schedule"} onClick={toggleMenu}>
-                        <li className="p-4 border-b">시간표</li>
-                    </Link>
-                    <Link href={"/diary"} onClick={toggleMenu}>
-                        <li className="p-4 border-b">일정 관리</li>
-                    </Link>
+                    {isLoggedIn && (
+                        <Link href={"/schedule"} onClick={toggleMenu}>
+                            <li className="p-4 border-b">시간표</li>
+                        </Link>
+                    )}
+                    {isLoggedIn && (
+                        <Link href={"/diary"} onClick={toggleMenu}>
+                            <li className="p-4 border-b">일정 관리</li>
+                        </Link>
+                    )}
                     {/* ~ */}
                     {/* <Link href={"/stcard"} onClick={toggleMenu}>
                         <li className="p-4 border-b">학생증</li>

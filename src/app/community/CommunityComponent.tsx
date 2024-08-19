@@ -227,7 +227,7 @@ export default function CommunityComponent({
     const [isLoading, setLoading] = useState(true);
     const [chuchunMode, setChuchunMode] = useState(false);
     const [visitedPosts, setVisitedPosts] = useState<any[]>([]);
-    const perPage = 20;
+    const perPage = 40;
     const router = useRouter();
 
     const fetchPosts = async () => {

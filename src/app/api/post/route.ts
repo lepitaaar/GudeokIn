@@ -6,6 +6,8 @@ import { string, z } from "zod";
 import moment from "moment";
 import { verify } from "@/app/lib/jwtUtil";
 import { getUserByUUID } from "@/app/lib/user";
+import { redis } from "@/app/lib/redis";
+import { SendPush } from "@/app/lib/push";
 
 const schema = z.object({
     title: z.string().max(100),
@@ -141,6 +143,27 @@ export async function POST(req: NextRequest) {
         `select post_id from everytime.community ORDER BY post_id desc;`
     );
     const postID: PostID[] = res.recordset;
+
+    const alarmUsersQuery = await db.query(
+        `select uuid from everytime.user_info where isCmAr = 1`
+    );
+    const alarmUsers: any[] = alarmUsersQuery.recordset;
+    for (var alarmUser of alarmUsers) {
+        if (alarmUser.uuid == payload.uuid) continue;
+        const fcm_token = await redis.sMembers(`fcm:${alarmUser.uuid}`);
+        if (fcm_token.length !== 0) {
+            for (const token of fcm_token) {
+                if (!token && token == null) continue;
+
+                SendPush(
+                    token,
+                    `새로운 글`,
+                    `${body.title}`,
+                    `https://gudeok.kr/?redirect=/community`
+                );
+            }
+        }
+    }
 
     return NextResponse.json(
         {

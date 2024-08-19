@@ -51,8 +51,11 @@ export async function GET(req: NextRequest) {
 }
 
 const schema = z.object({
-    nickname: z.string().max(20).min(1),
+    nickname: z.string().max(20).min(2),
+    postAlarm: z.string().transform((v) => v == "true"),
 });
+
+const filterd = ["익명", "익명(글쓴이)", "관리자", "어드민"];
 
 export async function POST(req: NextRequest) {
     const token = req.headers.get("Authorization")!.split(" ")[1];
@@ -71,15 +74,28 @@ export async function POST(req: NextRequest) {
     }
     const formData = await req.formData();
     const nickname = formData.get("nickname")?.toString();
+    const postAlarm = formData.get("postAlarm")?.toString();
 
     const validSC = schema.safeParse({
         nickname: nickname,
+        postAlarm: postAlarm,
     });
     if (validSC.error) {
         console.log(validSC.error.message);
         return NextResponse.json(
             {
                 message: "Params Validation error",
+            },
+            {
+                status: 500,
+            }
+        );
+    }
+
+    if (filterd.includes(validSC.data.nickname)) {
+        return NextResponse.json(
+            {
+                message: "허용하지 않는 닉네임입니다.",
             },
             {
                 status: 500,
@@ -185,6 +201,13 @@ export async function POST(req: NextRequest) {
             }
         );
     }
+    await db.query(
+        `UPDATE everytime.user_info SET isCmAr = @sub where uuid = @user_uuid`,
+        {
+            sub: validSC.data.postAlarm,
+            user_uuid: valid.payload!.uuid,
+        }
+    );
     return NextResponse.json(
         {
             message: "success",

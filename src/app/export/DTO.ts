@@ -13,6 +13,7 @@ export interface User {
     isNeisSync: boolean;
     neisSyncDate: string;
     credit: number;
+    isCmAr: boolean;
 }
 
 export interface Chuchun {

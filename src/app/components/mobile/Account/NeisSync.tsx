@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 
 export default function NeisSync() {
     const { isLoggedIn, user } = useAuth();
-    const [isSync, setSync] = useState(user!.isNeisSync);
+    const [isSync, setSync] = useState(user?.isNeisSync ?? false);
     const [isSetup, setSetup] = useState(false);
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");

@@ -15,19 +15,25 @@ export const SendPush = async (
     link: string
 ) => {
     // console.log("push 알림");
-    const payload: Message = {
-        token,
-        data: {
-            title: title,
-            body: message,
-            // link: link,
-        },
-        // webpush: {
-        //     fcmOptions: {
-        //         link: "https://youtube.com",
-        //     },
-        // },
-    };
+    try {
+        const payload: Message = {
+            token,
+            data: {
+                title: title,
+                body: message,
+                link: link,
+            },
+            // webpush: {
+            //     fcmOptions: {
+            //         link: "https://youtube.com",
+            //     },
+            // },
+        };
 
-    await admin.messaging().send(payload);
+        await admin.messaging().send(payload);
+    } catch (error) {
+        //fcm error
+        // console.log("fcm error");
+        // throw error;
+    }
 };
