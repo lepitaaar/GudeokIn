@@ -3,8 +3,6 @@ import localFont from "next/font/local";
 import "./globals.css";
 import type { Viewport } from "next";
 import AddToHomeDialong from "./components/mobile/A2HSDialog";
-import { LoadingProvider } from "./LoadingProvider";
-import { Suspense } from "react";
 import IosNotifiDialog from "./components/mobile/IosNotifiDialog";
 import { AuthProvider } from "./components/Provider/AuthProvider";
 import { cookies } from "next/headers";

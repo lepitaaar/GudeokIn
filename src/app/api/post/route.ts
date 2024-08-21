@@ -148,19 +148,21 @@ export async function POST(req: NextRequest) {
         `select uuid from everytime.user_info where isCmAr = 1`
     );
     const alarmUsers: any[] = alarmUsersQuery.recordset;
-    for (var alarmUser of alarmUsers) {
-        if (alarmUser.uuid == payload.uuid) continue;
-        const fcm_token = await redis.sMembers(`fcm:${alarmUser.uuid}`);
-        if (fcm_token.length !== 0) {
-            for (const token of fcm_token) {
-                if (!token && token == null) continue;
+    if (!board.admin) {
+        for (var alarmUser of alarmUsers) {
+            if (alarmUser.uuid == payload.uuid) continue;
+            const fcm_token = await redis.sMembers(`fcm:${alarmUser.uuid}`);
+            if (fcm_token.length !== 0) {
+                for (const token of fcm_token) {
+                    if (!token && token == null) continue;
 
-                SendPush(
-                    token,
-                    `새로운 글`,
-                    `${body.title}`,
-                    `https://gudeok.kr/?redirect=/community`
-                );
+                    SendPush(
+                        token,
+                        `새로운 글`,
+                        `${body.title}`,
+                        `https://gudeok.kr/?redirect=/community`
+                    );
+                }
             }
         }
     }
