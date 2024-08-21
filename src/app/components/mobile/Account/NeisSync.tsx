@@ -55,7 +55,7 @@ export default function NeisSync() {
         <>
             {isSync ? (
                 <div
-                    className="flex flex-col rounded-lg items-center justify-center p-4 cursor-pointer space-y-1"
+                    className="flex flex-col rounded-lg items-center justify-center p-4 cursor-pointer"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 7px" }}
                 >
                     <div className="flex flex-row items-center justify-center cursor-pointer">
@@ -103,135 +103,141 @@ export default function NeisSync() {
                 </div>
             ) : (
                 <div
-                    className="flex flex-col cursor-pointer p-4 items-center justify-center rounded-lg space-y-3"
+                    className="items-center justify-center rounded-lg"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 7px" }}
-                    onClick={() => {
-                        setSetup((prev) => !prev);
-                    }}
                 >
-                    <div className="flex flex-row items-center justify-center">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            version="1.1"
-                            id="레이어_1"
-                            x="0px"
-                            y="0px"
-                            height={25}
-                            viewBox="0 0 95 25"
-                        >
-                            <g>
-                                <path d="M10.4,13.2l2.1,4.6h0.1c-0.1-1.1-0.2-2.3-0.4-3.6c-0.1-1.3-0.2-2.6-0.2-3.8V2h4V23h-4.3L5.8,11.8L3.6,7.2H3.5   c0.1,1.1,0.2,2.3,0.3,3.6C3.9,12.1,4,13.4,4,14.6V23H0V2h4.3L10.4,13.2z" />
-                                <path d="M34.3,5.5h-8.7v4.9H33v3.5h-7.4v5.6h9V23H21.3V2h12.9V5.5z" />
-                                <path d="M43.1,23h-4.2V2h4.2V23z" />
-                                <path d="M50.4,22.6c-1.3-0.5-2.5-1.3-3.5-2.3l2.4-2.9c0.8,0.7,1.6,1.3,2.6,1.7c0.9,0.4,1.9,0.6,2.8,0.6c1.1,0,1.9-0.2,2.5-0.7   c0.6-0.4,0.9-1,0.9-1.8c0-0.4-0.1-0.7-0.2-1c-0.2-0.3-0.4-0.5-0.6-0.7c-0.3-0.2-0.6-0.4-1-0.6c-0.4-0.2-0.8-0.4-1.3-0.6L52,13.3   c-0.7-0.3-1.4-0.7-2.1-1.2c-0.6-0.5-1.2-1.1-1.6-1.8c-0.4-0.7-0.6-1.6-0.6-2.6c0-0.9,0.2-1.7,0.5-2.4c0.4-0.8,0.9-1.4,1.5-1.9   c0.6-0.5,1.4-1,2.3-1.3C53,1.7,54,1.6,55.1,1.6c1.3,0,2.5,0.2,3.6,0.7c1.1,0.5,2.2,1.1,3,2l-2.1,2.7c-0.7-0.6-1.4-1-2.1-1.3   c-0.7-0.3-1.5-0.5-2.4-0.5c-0.9,0-1.7,0.2-2.2,0.6C52.3,6.1,52,6.7,52,7.4c0,0.4,0.1,0.7,0.3,0.9c0.2,0.3,0.4,0.5,0.7,0.7   c0.3,0.2,0.6,0.4,1,0.6c0.4,0.2,0.8,0.4,1.3,0.5l2.8,1.2c1.3,0.5,2.3,1.2,3.1,2.1c0.8,0.9,1.1,2.1,1.1,3.6c0,0.9-0.2,1.7-0.5,2.5   c-0.4,0.8-0.9,1.5-1.5,2c-0.7,0.6-1.5,1-2.4,1.4c-1,0.3-2,0.5-3.3,0.5C53.1,23.4,51.8,23.2,50.4,22.6z" />
-                                <path
-                                    fill="#1060E1"
-                                    d="M67.9,10.6h7.5V2.7h4v7.9h7.5v3.9h-7.5v7.9h-4v-7.9h-7.5V10.6z"
-                                />
-                            </g>
-                        </svg>
-                        <p className="text-lg font-semibold">연동하기</p>
+                    <div
+                        className="flex flex-col cursor-pointer p-4"
+                        onClick={() => {
+                            setSetup((prev) => !prev);
+                        }}
+                    >
+                        <div className="flex flex-row items-center justify-center">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                version="1.1"
+                                id="레이어_1"
+                                x="0px"
+                                y="0px"
+                                height={25}
+                                viewBox="0 0 95 25"
+                            >
+                                <g>
+                                    <path d="M10.4,13.2l2.1,4.6h0.1c-0.1-1.1-0.2-2.3-0.4-3.6c-0.1-1.3-0.2-2.6-0.2-3.8V2h4V23h-4.3L5.8,11.8L3.6,7.2H3.5   c0.1,1.1,0.2,2.3,0.3,3.6C3.9,12.1,4,13.4,4,14.6V23H0V2h4.3L10.4,13.2z" />
+                                    <path d="M34.3,5.5h-8.7v4.9H33v3.5h-7.4v5.6h9V23H21.3V2h12.9V5.5z" />
+                                    <path d="M43.1,23h-4.2V2h4.2V23z" />
+                                    <path d="M50.4,22.6c-1.3-0.5-2.5-1.3-3.5-2.3l2.4-2.9c0.8,0.7,1.6,1.3,2.6,1.7c0.9,0.4,1.9,0.6,2.8,0.6c1.1,0,1.9-0.2,2.5-0.7   c0.6-0.4,0.9-1,0.9-1.8c0-0.4-0.1-0.7-0.2-1c-0.2-0.3-0.4-0.5-0.6-0.7c-0.3-0.2-0.6-0.4-1-0.6c-0.4-0.2-0.8-0.4-1.3-0.6L52,13.3   c-0.7-0.3-1.4-0.7-2.1-1.2c-0.6-0.5-1.2-1.1-1.6-1.8c-0.4-0.7-0.6-1.6-0.6-2.6c0-0.9,0.2-1.7,0.5-2.4c0.4-0.8,0.9-1.4,1.5-1.9   c0.6-0.5,1.4-1,2.3-1.3C53,1.7,54,1.6,55.1,1.6c1.3,0,2.5,0.2,3.6,0.7c1.1,0.5,2.2,1.1,3,2l-2.1,2.7c-0.7-0.6-1.4-1-2.1-1.3   c-0.7-0.3-1.5-0.5-2.4-0.5c-0.9,0-1.7,0.2-2.2,0.6C52.3,6.1,52,6.7,52,7.4c0,0.4,0.1,0.7,0.3,0.9c0.2,0.3,0.4,0.5,0.7,0.7   c0.3,0.2,0.6,0.4,1,0.6c0.4,0.2,0.8,0.4,1.3,0.5l2.8,1.2c1.3,0.5,2.3,1.2,3.1,2.1c0.8,0.9,1.1,2.1,1.1,3.6c0,0.9-0.2,1.7-0.5,2.5   c-0.4,0.8-0.9,1.5-1.5,2c-0.7,0.6-1.5,1-2.4,1.4c-1,0.3-2,0.5-3.3,0.5C53.1,23.4,51.8,23.2,50.4,22.6z" />
+                                    <path
+                                        fill="#1060E1"
+                                        d="M67.9,10.6h7.5V2.7h4v7.9h7.5v3.9h-7.5v7.9h-4v-7.9h-7.5V10.6z"
+                                    />
+                                </g>
+                            </svg>
+                            <p className="text-lg font-semibold">연동하기</p>
+                        </div>
                     </div>
-                    {isSetup && (
-                        <>
-                            {isLoading ? (
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 100 100"
-                                    preserveAspectRatio="xMidYMid"
-                                    width={50}
-                                    height={50}
-                                    style={{
-                                        background: "transparent",
-                                        display: "block",
-                                        shapeRendering: "auto",
-                                    }}
-                                >
-                                    <g>
-                                        <circle
-                                            strokeDasharray="164.93361431346415 56.97787143782138"
-                                            r="35"
-                                            strokeWidth="3"
-                                            stroke="#3f68e7"
-                                            fill="none"
-                                            cy="50"
-                                            cx="50"
-                                        >
-                                            <animateTransform
-                                                keyTimes="0;1"
-                                                values="0 50 50;360 50 50"
-                                                dur="1s"
-                                                repeatCount="indefinite"
-                                                type="rotate"
-                                                attributeName="transform"
-                                            ></animateTransform>
-                                        </circle>
-                                        <g></g>
-                                    </g>
-                                </svg>
-                            ) : (
-                                <>
-                                    <div className="w-full">
-                                        <div className="flex flex-col gap-6 w-full mt-4">
-                                            <div className="relative h-11 w-full min-w-[200px]">
-                                                <input
-                                                    placeholder="아이디"
-                                                    id="userID"
-                                                    value={userID}
-                                                    onChange={(e) =>
-                                                        setUserID(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                                    minLength={1}
-                                                />
-                                                <label
-                                                    className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
-                                                    htmlFor="userID"
-                                                >
-                                                    아이디
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex flex-col gap-6 w-full mt-4">
-                                            <div className="relative h-11 w-full min-w-[200px]">
-                                                <input
-                                                    placeholder="비밀번호"
-                                                    id="enc_password"
-                                                    value={password}
-                                                    onChange={(e) =>
-                                                        setPassword(
-                                                            e.target.value
-                                                        )
-                                                    }
-                                                    type="password"
-                                                    className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                                    minLength={1}
-                                                />
-                                                <label
-                                                    className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
-                                                    htmlFor="enc_password"
-                                                >
-                                                    패스워드
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <p className="text-xs text-red-500">
-                                            {errorMsg}
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={neisSync}
-                                        className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold rounded-[0.2rem]"
+                    <div className="p-4 w-full flex flex-col items-center justify-center">
+                        {isSetup && (
+                            <>
+                                {isLoading ? (
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 100 100"
+                                        preserveAspectRatio="xMidYMid"
+                                        width={50}
+                                        height={50}
+                                        style={{
+                                            background: "transparent",
+                                            display: "block",
+                                            shapeRendering: "auto",
+                                        }}
                                     >
-                                        연동
-                                    </button>
-                                </>
-                            )}
-                        </>
-                    )}
+                                        <g>
+                                            <circle
+                                                strokeDasharray="164.93361431346415 56.97787143782138"
+                                                r="35"
+                                                strokeWidth="3"
+                                                stroke="#3f68e7"
+                                                fill="none"
+                                                cy="50"
+                                                cx="50"
+                                            >
+                                                <animateTransform
+                                                    keyTimes="0;1"
+                                                    values="0 50 50;360 50 50"
+                                                    dur="1s"
+                                                    repeatCount="indefinite"
+                                                    type="rotate"
+                                                    attributeName="transform"
+                                                ></animateTransform>
+                                            </circle>
+                                            <g></g>
+                                        </g>
+                                    </svg>
+                                ) : (
+                                    <>
+                                        <div className="w-full">
+                                            <div className="flex flex-col gap-6 w-full mt-4">
+                                                <div className="relative h-11 w-full min-w-[200px]">
+                                                    <input
+                                                        placeholder="아이디"
+                                                        id="userID"
+                                                        value={userID}
+                                                        onChange={(e) =>
+                                                            setUserID(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                                        minLength={1}
+                                                    />
+                                                    <label
+                                                        className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
+                                                        htmlFor="userID"
+                                                    >
+                                                        아이디
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div className="flex flex-col gap-6 w-full mt-4">
+                                                <div className="relative h-11 w-full min-w-[200px]">
+                                                    <input
+                                                        placeholder="비밀번호"
+                                                        id="enc_password"
+                                                        value={password}
+                                                        onChange={(e) =>
+                                                            setPassword(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        type="password"
+                                                        className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                                        minLength={1}
+                                                    />
+                                                    <label
+                                                        className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
+                                                        htmlFor="enc_password"
+                                                    >
+                                                        패스워드
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <p className="text-xs text-red-500">
+                                                {errorMsg}
+                                            </p>
+                                        </div>
+                                        <button
+                                            onClick={neisSync}
+                                            className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold rounded-[0.2rem]"
+                                        >
+                                            연동
+                                        </button>
+                                    </>
+                                )}
+                            </>
+                        )}
+                    </div>
                 </div>
             )}
         </>
