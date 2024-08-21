@@ -23,8 +23,18 @@ export default async function CommunityPage({
         }
     ).then((res) => res.json());
 
+    var board = searchParams?.board ?? "all";
+    var p = searchParams?.p ?? "1";
+
+    if (!board) {
+        board = "all";
+    }
+    if (!p) {
+        p = "1";
+    }
+
     const postList = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/post?board=${searchParams.board}&page=${searchParams.p}&perPage=40&isChuChun=false`,
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/post?board=${board}&page=${p}&perPage=40&isChuChun=false`,
         {
             method: "GET",
             headers: {
@@ -38,8 +48,8 @@ export default async function CommunityPage({
             <CommunityComponent
                 boardlist={boardData.boards}
                 posts={postList}
-                board={searchParams?.board ?? "all"}
-                p={searchParams?.p ?? "1"}
+                board={board}
+                p={p}
             />
         </NavBarLayout>
     );
