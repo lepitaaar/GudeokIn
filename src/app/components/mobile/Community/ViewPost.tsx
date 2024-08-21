@@ -11,6 +11,7 @@ import DOMPurify from "isomorphic-dompurify";
 import moment from "moment";
 import ReplyLayout from "./ReplyLayout";
 import { LoadingSpinner } from "../../common/LoadingSpinner";
+import Link from "next/link";
 
 interface CommentResponse {
     message: string;
@@ -35,14 +36,7 @@ export default function MobileViewPost({
     const [gaechu, setGaechu] = useState(like);
     const [beechu, setBeechu] = useState(dislike);
     const [imageLoading, setLoading] = useState(false);
-    // const searchParams = useSearchParams();
-
-    const onClose = () => {
-        /*router.push(
-            `/community?board=${post.boardType}&p=${searchParams.get("p") ?? 1}`
-        )'*/
-        router.back();
-    };
+    const searchParams = useSearchParams();
 
     const getComments = async () => {
         try {
@@ -113,17 +107,22 @@ export default function MobileViewPost({
             <nav className="border border-none z-10 w-full h-[56px] shadow">
                 <ul className="flex flex-row items-center justify-center h-full w-full">
                     <li className="flex-1 ml-3">
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            onClick={onClose}
-                            height="24px"
-                            viewBox="0 -960 960 960"
-                            width="24px"
-                            fill="#2b2b2b"
-                            className="cursor-pointer"
+                        <Link
+                            href={`/community?board=${searchParams?.get("board") ?? "all"}&p=${searchParams?.get("p") ?? 1}`}
+                            replace
                         >
-                            <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
-                        </svg>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                // onClick={onClose}
+                                height="24px"
+                                viewBox="0 -960 960 960"
+                                width="24px"
+                                fill="#2b2b2b"
+                                className="cursor-pointer"
+                            >
+                                <path d="m142-480 294 294q15 15 14.5 35T435-116q-15 15-35 15t-35-15L57-423q-12-12-18-27t-6-30q0-15 6-30t18-27l308-308q15-15 35.5-14.5T436-844q15 15 15 35t-15 35L142-480Z" />
+                            </svg>
+                        </Link>
                     </li>
                     <li className="flex-1 text-center">
                         <p className="font-semibold text-lg">{post.board}</p>
