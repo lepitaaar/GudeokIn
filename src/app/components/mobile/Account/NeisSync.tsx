@@ -105,13 +105,11 @@ export default function NeisSync() {
                 <div
                     className="flex flex-col cursor-pointer p-4 items-center justify-center rounded-lg space-y-3"
                     style={{ boxShadow: "rgba(0, 0, 0, 0.3) 0px 1px 7px" }}
+                    onClick={() => {
+                        setSetup((prev) => !prev);
+                    }}
                 >
-                    <div
-                        className="flex flex-row items-center justify-center"
-                        onClick={() => {
-                            setSetup((prev) => !prev);
-                        }}
-                    >
+                    <div className="flex flex-row items-center justify-center">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             version="1.1"

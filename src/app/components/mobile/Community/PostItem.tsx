@@ -1,5 +1,6 @@
 import { Post } from "@/app/export/DTO";
 import { ChangeDateToSigan } from "@/app/lib/util";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 
@@ -12,19 +13,9 @@ export default function MobilePostItem({
     page: number;
     isVisited: boolean;
 }) {
-    const router = useRouter();
-
-    const onClick = () => {
-        router.push(`/board/${post.boardType}/${post.post_id}?p=${page}`);
-        //router.back();
-    };
-
     return (
-        <>
-            <div
-                onClick={onClick}
-                className="post_list w-full h-[80px] border border-none overflow-hidden cursor-pointer"
-            >
+        <Link href={`/board/${post.boardType}/${post.post_id}?p=${page}`}>
+            <div className="post_list w-full h-[80px] border border-none overflow-hidden cursor-pointer">
                 <div className="content grid grid-cols-[1fr_auto] h-full mx-[16px] items-center">
                     <div className="flex flex-col w-full overflow-hidden space-y-0.5">
                         <p
@@ -66,6 +57,6 @@ export default function MobilePostItem({
                     </div>
                 </div>
             </div>
-        </>
+        </Link>
     );
 }

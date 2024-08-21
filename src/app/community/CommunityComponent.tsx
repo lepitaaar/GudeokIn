@@ -172,25 +172,14 @@ function FloatingWrite({
 const BoardsTagList = ({
     boards,
     currentSelect,
-    setSelectedBoard,
-    setPage,
+    changeBoard,
 }: {
     boards: Board[];
     currentSelect: string;
-    setSelectedBoard: (board: string) => void;
-    setPage: (page: number) => void;
+    changeBoard: (boardType: string) => void;
 }) => {
-    const router = useRouter();
-    const changeBoard = (board: string) => {
-        //window.location.href = `/community?board=${board}&p=1`;
-        setPage(1);
-        router.push(`/community?board=${board}&p=1`);
-        // router.refresh()
-        setSelectedBoard(board);
-    };
-
     return (
-        <div className="overflow-y-auto pt-3 pb-1 space-x-1 items-center flex flex-row mx-[16px] whitespace-nowrap scrollbar-hide cursor-pointer">
+        <div className="overflow-y-auto pt-3 pb-1 space-x-1 items-center flex flex-row px-[16px] whitespace-nowrap scrollbar-hide cursor-pointer">
             {boards.map((board: Board) => {
                 return (
                     <div
@@ -214,23 +203,26 @@ const BoardsTagList = ({
 };
 export default function CommunityComponent({
     boardlist,
+    posts,
+    board,
+    p,
 }: {
     boardlist: Board[];
+    posts: any;
+    board: string;
+    p: string;
 }) {
-    const params = useSearchParams();
-    const [postlist, setPostlist] = useState<PostResponse>();
+    const [postlist, setPostlist] = useState<PostResponse>(posts ?? []);
     const [boards] = useState<Board[]>(boardlist);
-    const [selectedBoard, setSelectedBoard] = useState<string>(
-        params?.get("board") ?? "all"
-    );
-    const [page, setPage] = useState<number>(parseInt(params?.get("p") ?? "1"));
-    const [isLoading, setLoading] = useState(true);
+    const [selectedBoard, setSelectedBoard] = useState<string>(board);
+    const [page, setPage] = useState<number>(parseInt(p));
+    const [isLoading, setLoading] = useState(false);
     const [chuchunMode, setChuchunMode] = useState(false);
     const [visitedPosts, setVisitedPosts] = useState<any[]>([]);
     const perPage = 40;
     const router = useRouter();
 
-    const fetchPosts = async () => {
+    const fetchPosts = async (selectedBoard: string, page: number) => {
         try {
             const postRes: AxiosResponse<PostResponse> = await axios.get(
                 `/api/post?board=${selectedBoard}&page=${page}&perPage=${perPage}&isChuChun=${chuchunMode}`
@@ -242,63 +234,37 @@ export default function CommunityComponent({
         }
     };
 
-    /**
-     * const fetchBoards = async () => {
-        try {
-            const boardsRes: AxiosResponse<BoardResponse> = await axios.get(
-                `/api/boards`
-            );
-            setSelectedBoard(
-                selectedBoard ?? boardsRes.data.boards[0].boardType
-            );
-            setBoards(boardsRes.data.boards);
-        } catch (error) {
-            if (isAxiosError(error) && error.response) {
-                alert(error.response.data.message);
-            }
-            console.error(error);
-        }
-    };
-     */
-
     useEffect(() => {
         setVisitedPosts(getVisitedPosts());
-        //setSelectedBoard(params.get("board") ?? "all");
-        //setPage(1);
-        setLoading(true);
-        fetchPosts();
     }, []);
-
-    useEffect(() => {
-        setLoading(true);
-        setPage(1);
-        fetchPosts();
-    }, [chuchunMode, selectedBoard]);
-
-    useEffect(() => {
-        setLoading(true);
-        fetchPosts();
-    }, [page]);
 
     const handlePageClick = (event: { selected: number }) => {
         const clickedPage = event.selected + 1;
         setPage(clickedPage);
-        router.push(
-            `/community?board=${params?.get("board") ?? "all"}&p=${clickedPage}`
-        );
+        router.replace(`/community?board=${selectedBoard}&p=${clickedPage}`);
+        setLoading(true);
+        fetchPosts(selectedBoard, clickedPage);
     };
+
     // 방문한 게시글 ID 리스트를 가져오는 함수
     const getVisitedPosts = () => {
         return JSON.parse(localStorage.getItem("visitedPosts") || "[]");
+    };
+
+    const changeBoard = (boardType: string) => {
+        router.replace(`/community?board=${boardType}&p=1`);
+        setPage(1);
+        setSelectedBoard(boardType);
+        setLoading(true);
+        fetchPosts(boardType, 1);
     };
 
     return (
         <>
             <div className="mb-28">
                 <BoardsTagList
-                    setSelectedBoard={setSelectedBoard}
+                    changeBoard={changeBoard}
                     boards={boards}
-                    setPage={setPage}
                     currentSelect={selectedBoard}
                 />
                 <FloatingWrite
@@ -373,8 +339,8 @@ export default function CommunityComponent({
                                 (postlist?.total ?? 1) / perPage
                             )}
                             initialPage={page - 1}
-                            // initialPage={page - 1}
                             onPageChange={handlePageClick}
+                            disableInitialCallback={true}
                             pageRangeDisplayed={3}
                             marginPagesDisplayed={1}
                             renderOnZeroPageCount={null}
