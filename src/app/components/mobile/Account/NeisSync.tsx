@@ -136,108 +136,106 @@ export default function NeisSync() {
                             <p className="text-lg font-semibold">연동하기</p>
                         </div>
                     </div>
-                    <div className="p-4 w-full flex flex-col items-center justify-center">
-                        {isSetup && (
-                            <>
-                                {isLoading ? (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        viewBox="0 0 100 100"
-                                        preserveAspectRatio="xMidYMid"
-                                        width={50}
-                                        height={50}
-                                        style={{
-                                            background: "transparent",
-                                            display: "block",
-                                            shapeRendering: "auto",
-                                        }}
-                                    >
-                                        <g>
-                                            <circle
-                                                strokeDasharray="164.93361431346415 56.97787143782138"
-                                                r="35"
-                                                strokeWidth="3"
-                                                stroke="#3f68e7"
-                                                fill="none"
-                                                cy="50"
-                                                cx="50"
-                                            >
-                                                <animateTransform
-                                                    keyTimes="0;1"
-                                                    values="0 50 50;360 50 50"
-                                                    dur="1s"
-                                                    repeatCount="indefinite"
-                                                    type="rotate"
-                                                    attributeName="transform"
-                                                ></animateTransform>
-                                            </circle>
-                                            <g></g>
-                                        </g>
-                                    </svg>
-                                ) : (
-                                    <>
-                                        <div className="w-full">
-                                            <div className="flex flex-col gap-6 w-full mt-4">
-                                                <div className="relative h-11 w-full min-w-[200px]">
-                                                    <input
-                                                        placeholder="아이디"
-                                                        id="userID"
-                                                        value={userID}
-                                                        onChange={(e) =>
-                                                            setUserID(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                                        minLength={1}
-                                                    />
-                                                    <label
-                                                        className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
-                                                        htmlFor="userID"
-                                                    >
-                                                        아이디
-                                                    </label>
-                                                </div>
-                                            </div>
-
-                                            <div className="flex flex-col gap-6 w-full mt-4">
-                                                <div className="relative h-11 w-full min-w-[200px]">
-                                                    <input
-                                                        placeholder="비밀번호"
-                                                        id="enc_password"
-                                                        value={password}
-                                                        onChange={(e) =>
-                                                            setPassword(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                        type="password"
-                                                        className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                                                        minLength={1}
-                                                    />
-                                                    <label
-                                                        className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
-                                                        htmlFor="enc_password"
-                                                    >
-                                                        패스워드
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <p className="text-xs text-red-500">
-                                                {errorMsg}
-                                            </p>
-                                        </div>
-                                        <button
-                                            onClick={neisSync}
-                                            className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold rounded-[0.2rem]"
+                    {isSetup && (
+                        <div className="p-4 w-full flex flex-col items-center justify-center">
+                            {isLoading ? (
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 100 100"
+                                    preserveAspectRatio="xMidYMid"
+                                    width={50}
+                                    height={50}
+                                    style={{
+                                        background: "transparent",
+                                        display: "block",
+                                        shapeRendering: "auto",
+                                    }}
+                                >
+                                    <g>
+                                        <circle
+                                            strokeDasharray="164.93361431346415 56.97787143782138"
+                                            r="35"
+                                            strokeWidth="3"
+                                            stroke="#3f68e7"
+                                            fill="none"
+                                            cy="50"
+                                            cx="50"
                                         >
-                                            연동
-                                        </button>
-                                    </>
-                                )}
-                            </>
-                        )}
-                    </div>
+                                            <animateTransform
+                                                keyTimes="0;1"
+                                                values="0 50 50;360 50 50"
+                                                dur="1s"
+                                                repeatCount="indefinite"
+                                                type="rotate"
+                                                attributeName="transform"
+                                            ></animateTransform>
+                                        </circle>
+                                        <g></g>
+                                    </g>
+                                </svg>
+                            ) : (
+                                <>
+                                    <div className="w-full">
+                                        <div className="flex flex-col gap-6 w-full mt-4">
+                                            <div className="relative h-11 w-full min-w-[200px]">
+                                                <input
+                                                    placeholder="아이디"
+                                                    id="userID"
+                                                    value={userID}
+                                                    onChange={(e) =>
+                                                        setUserID(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                                    minLength={1}
+                                                />
+                                                <label
+                                                    className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
+                                                    htmlFor="userID"
+                                                >
+                                                    아이디
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex flex-col gap-6 w-full mt-4">
+                                            <div className="relative h-11 w-full min-w-[200px]">
+                                                <input
+                                                    placeholder="비밀번호"
+                                                    id="enc_password"
+                                                    value={password}
+                                                    onChange={(e) =>
+                                                        setPassword(
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                    type="password"
+                                                    className="peer h-full w-full border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                                                    minLength={1}
+                                                />
+                                                <label
+                                                    className="after:content[' '] pointer-events-none absolute left-0  -top-2.5 flex h-full w-full select-none !overflow-visible truncate text-sm font-normal leading-tight text-gray-500 transition-all after:absolute after:-bottom-2.5 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-500 after:transition-transform after:duration-300"
+                                                    htmlFor="enc_password"
+                                                >
+                                                    패스워드
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <p className="text-xs text-red-500">
+                                            {errorMsg}
+                                        </p>
+                                    </div>
+                                    <button
+                                        onClick={neisSync}
+                                        className="w-[55px] h-[37px] bg-blue-500 text-white font-semibold rounded-[0.2rem]"
+                                    >
+                                        연동
+                                    </button>
+                                </>
+                            )}
+                        </div>
+                    )}
                 </div>
             )}
         </>

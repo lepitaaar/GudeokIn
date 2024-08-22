@@ -37,11 +37,11 @@ interface BoardResponse {
 function FloatingWrite({
     board,
     chuchun,
-    setChuchunMode,
+    handleChuChun,
 }: {
     board: string;
     chuchun: boolean;
-    setChuchunMode: Dispatch<SetStateAction<boolean>>;
+    handleChuChun: () => void;
 }) {
     const [isVisible, setIsVisible] = useState(true);
     let lastScrollY = 0;
@@ -102,15 +102,13 @@ function FloatingWrite({
                 </Link>
                 <div
                     className="flex flex-col items-center justify-center cursor-pointer"
-                    onClick={() => {
-                        setChuchunMode((prev) => !prev);
-                    }}
+                    onClick={handleChuChun}
                 >
                     {chuchun ? (
                         <svg
                             fill="#3b82f6"
-                            height="22px"
-                            width="22px"
+                            height="24px"
+                            width="24px"
                             viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                         >
@@ -259,6 +257,13 @@ export default function CommunityComponent({
         fetchPosts(boardType, 1);
     };
 
+    const handleChuChun = () => {
+        setChuchunMode((prev) => !prev);
+        setLoading(true);
+        setPage(1);
+        fetchPosts(selectedBoard, 1);
+    };
+
     return (
         <>
             <div className="mb-28">
@@ -270,7 +275,7 @@ export default function CommunityComponent({
                 <FloatingWrite
                     board={selectedBoard}
                     chuchun={chuchunMode}
-                    setChuchunMode={setChuchunMode}
+                    handleChuChun={handleChuChun}
                 />
 
                 {isLoading ? (
