@@ -220,10 +220,14 @@ export default function CommunityComponent({
     const perPage = 40;
     const router = useRouter();
 
-    const fetchPosts = async (selectedBoard: string, page: number) => {
+    const fetchPosts = async (
+        selectedBoard: string,
+        page: number,
+        isChuchun: boolean
+    ) => {
         try {
             const postRes: AxiosResponse<PostResponse> = await axios.get(
-                `/api/post?board=${selectedBoard}&page=${page}&perPage=${perPage}&isChuChun=${chuchunMode}`
+                `/api/post?board=${selectedBoard}&page=${page}&perPage=${perPage}&isChuChun=${isChuchun}`
             );
             setPostlist(postRes.data);
             setLoading(false);
@@ -241,7 +245,7 @@ export default function CommunityComponent({
         setPage(clickedPage);
         router.replace(`/community?board=${selectedBoard}&p=${clickedPage}`);
         setLoading(true);
-        fetchPosts(selectedBoard, clickedPage);
+        fetchPosts(selectedBoard, clickedPage, chuchunMode);
     };
 
     // 방문한 게시글 ID 리스트를 가져오는 함수
@@ -254,14 +258,14 @@ export default function CommunityComponent({
         setPage(1);
         setSelectedBoard(boardType);
         setLoading(true);
-        fetchPosts(boardType, 1);
+        fetchPosts(boardType, 1, chuchunMode);
     };
 
     const handleChuChun = () => {
-        setChuchunMode((prev) => !prev);
         setLoading(true);
         setPage(1);
-        fetchPosts(selectedBoard, 1);
+        fetchPosts(selectedBoard, 1, !chuchunMode);
+        setChuchunMode((prev) => !prev);
     };
 
     return (
