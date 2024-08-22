@@ -194,18 +194,26 @@ export default async function RootLayout({
     }
 
     return (
-        <html lang="ko">
-            <body className={`${pretendard.variable} font-pretendard`}>
-                <AuthProvider session={session}>
-                    <NextTopLoader color="#2854C5" showSpinner={false} />
-                    <AddToHomeDialong />
-                    <IosNotifiDialog />
-                    {children}
-                    {/* <LoadingProvider>
+        <>
+            <head>
+                <meta
+                    name="naver-site-verification"
+                    content="fcfaa84c93504e16e9a3be7b8edede0226313bd1"
+                />
+            </head>
+            <html lang="ko">
+                <body className={`${pretendard.variable} font-pretendard`}>
+                    <AuthProvider session={session}>
+                        <NextTopLoader color="#2854C5" showSpinner={false} />
+                        <AddToHomeDialong />
+                        <IosNotifiDialog />
+                        {children}
+                        {/* <LoadingProvider>
                         </LoadingProvider> */}
-                </AuthProvider>
-            </body>
-        </html>
+                    </AuthProvider>
+                </body>
+            </html>
+        </>
     );
 }
 
