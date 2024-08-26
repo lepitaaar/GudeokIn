@@ -134,47 +134,8 @@ const BarcodeScanner: React.FC = () => {
                             value="S2010028"
                             format="CODE39"
                             displayValue={false}
-                            // width={1.6}
-                            height={45}
-                        />
-
-                        <Barcode
-                            value="S2010028"
-                            format="CODE128"
-                            displayValue={false}
-                            // width={1.6}
-                            height={45}
-                        />
-                        <Barcode
-                            value="S2010028"
-                            format="CODE128A"
-                            displayValue={false}
-                            // width={1.6}
-                            height={45}
-                        />
-
-                        <Barcode
-                            value="S2010028"
-                            format="CODE128B"
-                            displayValue={false}
-                            // width={1.6}
-                            height={45}
-                        />
-
-                        <Barcode
-                            value="S2010028"
-                            format="CODE128C"
-                            displayValue={false}
-                            // width={1.6}
-                            height={45}
-                        />
-
-                        <Barcode
-                            value="S2010028"
-                            format="UPC"
-                            displayValue={false}
-                            // width={1.6}
-                            height={45}
+                            width={1.67}
+                            height={55}
                         />
 
                         <Image
