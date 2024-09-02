@@ -6,10 +6,9 @@ import { verify } from "../lib/jwtUtil";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { db } from "../lib/database";
-import type { Metadata } from "next";
-import { useAuth } from "../components/Provider/AuthProvider";
 import { RedirectType, redirect } from "next/navigation";
-import { getUserSession } from "../lib/user";
+
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
     title: "시간표",
@@ -51,15 +50,16 @@ interface TimetableData {
 }
 
 export default async function WeekSchedule() {
-    const { isLoggedIn, user } = await getUserSession();
+    const token = cookies().get("accessToken")!.value;
+    const verified = await verify(token);
 
-    if (!isLoggedIn) {
-        redirect(encodeURI("/?alert=로그인 후 이용가능한 서비스 입니다"));
+    if (!verified.ok) {
+		redirect(encodeURI("/?alert=로그인 후 이용가능한 서비스 입니다"));
     }
 
     const startOfWeek = moment().startOf("isoWeek");
-    const grade = user!.grade;
-    const classNM = user!.class;
+    const grade = verified.payload!.grade;
+    const classNM = verified.payload!.class;
     var subject = [];
     var setSubject = new Map<string, Set<string>>();
 
@@ -103,6 +103,7 @@ export default async function WeekSchedule() {
                 }
             }
         });
+
         parsed.sort((a, b) => a.PERIO - b.PERIO);
         subject.push(
             parsed.map((data) => {
@@ -112,17 +113,15 @@ export default async function WeekSchedule() {
                 return data.CLRM_NM.split("/")[0];
             })
         );
-        setSubject = new Map<string, Set<string>>(
-            Array.from(setSubject).sort()
-        );
     }
 
+    const valid = verify(cookies().get("accessToken")!.value);
     const map = JSON.parse(
         (
             await db.query(
                 `SELECT map FROM everytime.schedule WHERE uuid = @uuid`,
                 {
-                    uuid: user!.uuid,
+                    uuid: valid.payload?.uuid,
                 }
             )
         ).recordset[0]?.map ?? "{}"
