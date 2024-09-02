@@ -93,7 +93,7 @@ export default async function WeekSchedule() {
                  */
                 const set = row.CLRM_NM.split("/");
                 const values = setSubject.get(set[0]) ?? new Set<string>();
-                values.add(`${set[1]}.${set[2]}`);
+                values.add(`${set[1]}(${set[2]})`);
                 setSubject.set(set[0], values);
 
                 if (!dupCheck.has(row.PERIO)) {
