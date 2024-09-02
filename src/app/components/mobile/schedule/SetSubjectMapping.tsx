@@ -16,7 +16,7 @@ export default function SetSubectMappingView({
 
     const SaveMapping = async () => {
         try {
-            const res = await axios.post(/api/schedule, {
+            const res = await axios.post(`/api/schedule`, {
                 mapping: JSON.stringify(Object.fromEntries(MappingTable!)),
             });
             if (res.status === 200) {
