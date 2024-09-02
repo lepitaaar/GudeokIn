@@ -9,15 +9,15 @@ export default function SetSubectMappingView({
     existMap,
 }: {
     setSubject: Map<string, Set<string>>;
-    existMap: any;
+    existMap: Map<string, string>;
 }) {
     const router = useRouter();
-    const [MappingTable, setMappingTable] = useState<Map<string, string>>();
+    const [MappingTable, setMappingTable] = useState<Map<string, string>>(existMap || new Map());
 
     const SaveMapping = async () => {
         try {
             const res = await axios.post(`/api/schedule`, {
-                mapping: JSON.stringify(Object.fromEntries(MappingTable!)),
+                mapping: JSON.stringify(Object.fromEntries(MappingTable)),
             });
             if (res.status === 200) {
                 alert("저장되었습니다!");
@@ -33,7 +33,7 @@ export default function SetSubectMappingView({
         setSubject.forEach((value, key) => {
             setMappingTable((prev) => new Map(prev).set(key, key));
         });
-    }, []);
+    }, [setSubject]);
 
     const ChangeMapping = (
         e: React.ChangeEvent<HTMLSelectElement>,
@@ -47,9 +47,7 @@ export default function SetSubectMappingView({
     return (
         <div>
             {setSubject.size <= 0 ? (
-                <>
-                    <p>지정할 세트 수업이 존재하지않습니다.</p>
-                </>
+                <p>지정할 세트 수업이 존재하지 않습니다.</p>
             ) : (
                 <div className="mb-40 space-y-1">
                     {Array.from(setSubject).map(([key, value]) => (
@@ -62,7 +60,7 @@ export default function SetSubectMappingView({
                             </label>
                             <select
                                 id={key}
-                                defaultValue={existMap[key]}
+                                defaultValue={MappingTable.get(key)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 onChange={(e) => ChangeMapping(e, key)}
                             >
@@ -75,6 +73,7 @@ export default function SetSubectMappingView({
                                             </option>
                                         );
                                     }
+                                    return null;
                                 })}
                             </select>
                         </div>
