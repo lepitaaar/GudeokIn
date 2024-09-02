@@ -9,10 +9,10 @@ export default function SetSubectMappingView({
     existMap,
 }: {
     setSubject: Map<string, Set<string>>;
-    existMap: Map<string, string>;
+    existMap: any;
 }) {
     const router = useRouter();
-    const [MappingTable, setMappingTable] = useState<Map<string, string>>(existMap || new Map());
+    const [MappingTable, setMappingTable] = useState<Map<string, string>>(existMap ?? new Map());
 
     const SaveMapping = async () => {
         try {
